@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eEuo pipefail
+cd "$(dirname "$0")"
+
+cd ..
+
+VERSION=$(git describe --tags --always)
+IMAGE_LATEST="stepin/git-parse-commits"
+IMAGE="$IMAGE_LATEST:$VERSION"
+
+
+docker build . -t "$IMAGE"
+docker tag $IMAGE $IMAGE_LATEST
+
+#docker push "$IMAGE"
+#docker push $IMAGE_LATEST

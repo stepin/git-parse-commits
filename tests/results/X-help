@@ -1,0 +1,29 @@
+usage: git-parse-commits [-h] [-j] [-t [TAG_PREFIX]] [--tag] [-s [SCOPE]]
+                         [-i [INITIAL_REVISION]] [-l [LAST_REVISION]]
+                         {version,currentVersion,lastReleaseVersion,releaseVersion,releaseNotes}
+                         ...
+
+Provides next release version and release notes from git commit messages.
+
+positional arguments:
+  {version,currentVersion,lastReleaseVersion,releaseVersion,releaseNotes}
+    version             Prints version of this tool
+    currentVersion      Prints current version (useful for non-release builds)
+    lastReleaseVersion  Prints version of last release
+    releaseVersion      Prints version of next release from git commit
+                        messages
+    releaseNotes        Prints release notes from git commit messages
+
+options:
+  -h, --help            show this help message and exit
+  -j, --json            output in json format
+  -t [TAG_PREFIX], --tag-prefix [TAG_PREFIX]
+                        prefix for tags (optional)
+  --tag                 add tag prefix to versions (only if tag prefix is
+                        defined)
+  -s [SCOPE], --scope [SCOPE]
+                        scope to filter release note items
+  -i [INITIAL_REVISION], --initial-revision [INITIAL_REVISION]
+                        start range from next revision
+  -l [LAST_REVISION], --last-revision [LAST_REVISION]
+                        stop on this revision
