@@ -103,7 +103,7 @@ def run(cmd) -> str:
 
 
 def version_command(as_json: bool):
-    version = "1.0.0"
+    version = "1.0.0-beta.2"
     if as_json:
         print('{"tool_version": "%s"}' % version)
     else:
@@ -283,7 +283,7 @@ def parse_message(message: str):
 
     headers = []
     for line in header_lines:
-        if line.startswith("-"):
+        if line.startswith("-") or line.startswith("*"):
             line = line[1:]
         line = line.strip()
         parseds = RELEASE_LINE_RE.findall(line)
@@ -418,10 +418,7 @@ def prepare_parsed_info(
         initial_revision = last_release
     range = prepare_range(initial_revision, last_revision, tag_prefix)
 
-    if tag_prefix:
-        commits_json_txt = run(["jc", "git", "log", range])
-    else:
-        commits_json_txt = run(["jc", "git", "log", range])
+    commits_json_txt = run(["jc", "git", "log", range])
 
     json_array_obj = json.loads(commits_json_txt)
     raw_commits = []

@@ -8,6 +8,7 @@ RUN pip3 install jc \
 && mkdir /app
 
 WORKDIR /app
+ENV PATH="${PATH}:/app"
 
 COPY git-parse-commits ./
 

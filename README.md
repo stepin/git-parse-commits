@@ -1,25 +1,25 @@
-# Git Better Changelog
+# Git Parse Commits
 [![GitHub release](https://img.shields.io/github/release/stepin/git-parse-commits.svg)](https://github.com/stepin/git-parse-commits/releases) [![Build status](https://img.shields.io/github/actions/workflow/status/stepin/git-parse-commits/main.yml)](https://github.com/stepin/git-parse-commits/actions/workflows/main.yml) [![github license badge](https://img.shields.io/github/license/stepin/git-parse-commits)](https://github.com/stepin/git-parse-commits)
 
 This script is to be used in CICD pipelines to provide new version number
 (bases on commit messages) and releses notes (also bases on commit messages).
 
-Docker image: `stepin/git-parse-commits:1.0.0`
+Docker image: [stepin/git-parse-commits:latest](https://hub.docker.com/r/stepin/git-parse-commits)
 
 Example usage for Gitlab:
 
 ```yaml
-rel_notes:
+create_changelog:
   stage: "build"
   image:
-      name: "git-parse-commits:1.0.0"
+      name: "stepin/git-parse-commits:latest"
       entrypoint: [""]
   variables:
       GIT_DEPTH: "0"
   script:
-  - git-parse-commits -v
-  - CURRENT_VERSION="$(git describe --tags --always)"
-  - RELEASE_VERSION="$(git-parse-commits --tag-prefix 'v' nextVersion)"
+  - git-parse-commits version
+  - CURRENT_VERSION="$(git-parse-commits currentVersion)"
+  - RELEASE_VERSION="$(git-parse-commits --tag-prefix 'v' releaseVersion)"
   - echo "RELEASE_VERSION=$RELEASE_VERSION\nCURRENT_VERSION=$CURRENT_VERSION" > relNotes.env
   - git-parse-commits --tag-prefix 'v' releaseNotes > releaseNotes.md
   artifacts:
@@ -27,7 +27,11 @@ rel_notes:
           dotenv: relNotes.env
       paths:
       - releaseNotes.md
-      expires_in: 1 day
+      expire_in: 1 day
+  rules:
+  - if: $CI_MERGE_REQUEST_IID
+  - if: $CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"
+  - if: $CI_COMMIT_REF_NAME == "release/*" && $CI_PIPELINE_SOURCE != "schedule"
 
 release:
   stage: "release"
@@ -40,8 +44,12 @@ release:
       tag_name: "$RELEASE_VERSION"
       tag_message: "Release $RELEASE_VERSION"
       description: "releaseNotes.md"
+  assets:
+    links:
+    - name: "Container Image $CI_COMMIT_TAG"
+      url: "https://$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA"
   needs:
-  - "rel_notes"
+  - "create_changelog"
   rules:
   - if: $CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"
     when: manual
@@ -49,10 +57,6 @@ release:
   - if: $CI_COMMIT_REF_NAME == "release/*" && $CI_PIPELINE_SOURCE != "schedule"
     when: manual
     allow_failure: true
-    assets:
-  links:
-    - name: "Container Image $CI_COMMIT_TAG"
-      url: "https://$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA"
 ```
 (CURRENT_VERSION can be used for non-release builds)
 
