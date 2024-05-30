@@ -395,8 +395,11 @@ def increment_version(last_release: str, increment: IncrementType) -> str:
     patch = int(version_parts[2])
     if increment == IncrementType.MAJOR:
         major += 1
+        minor = 0
+        patch = 0
     elif increment == IncrementType.MINOR:
         minor += 1
+        patch = 0
     elif increment == IncrementType.PATCH:
         patch += 1
     return f"{major}.{minor}.{patch}"
