@@ -103,7 +103,7 @@ def run(cmd) -> str:
 
 
 def version_command(as_json: bool):
-    version = "1.0.0-beta.2"
+    version = "SNAPSHOT"
     if as_json:
         print('{"tool_version": "%s"}' % version)
     else:

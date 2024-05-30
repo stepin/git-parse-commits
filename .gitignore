@@ -30,3 +30,4 @@ venv3
 /tests/repo
 /tests/repo2
 /tests/repo3
+*.orig
