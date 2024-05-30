@@ -12,16 +12,18 @@ Example usage for Gitlab:
 create_changelog:
   stage: "build"
   image:
-      name: "stepin/git-parse-commits:latest"
+      name: "stepin/git-parse-commits:1.0.0"
       entrypoint: [""]
   variables:
       GIT_DEPTH: "0"
   script:
   - git-parse-commits version
   - CURRENT_VERSION="$(git-parse-commits currentVersion)"
-  - RELEASE_VERSION="$(git-parse-commits --tag-prefix 'v' releaseVersion)"
-  - echo "RELEASE_VERSION=$RELEASE_VERSION\nCURRENT_VERSION=$CURRENT_VERSION" > relNotes.env
-  - git-parse-commits --tag-prefix 'v' releaseNotes > releaseNotes.md
+  - RELEASE_VERSION="$(git-parse-commits releaseVersion)"
+  - echo "RELEASE_VERSION=$RELEASE_VERSION" >> relNotes.env
+  - echo "CURRENT_VERSION=$CURRENT_VERSION" >> relNotes.env
+  - cat relNotes.env
+  - git-parse-commits releaseNotes > releaseNotes.md
   artifacts:
       reports:
           dotenv: relNotes.env
