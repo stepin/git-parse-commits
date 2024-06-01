@@ -241,4 +241,5 @@ Following components should be installed locally (or in Docker):
 
 ```bash
 brew install jq jc
+poetry install
 ```

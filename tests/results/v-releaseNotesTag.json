@@ -1,0 +1,26 @@
+{
+  "version": {
+    "last": "v2.11.0",
+    "increment": "minor",
+    "current": "v2.12.0"
+  },
+  "commits": [
+    {
+      "commit": "a8c7d81024903bdc1cc0ca71c0361f7dc4adc725",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:33 2024 +0400",
+      "raw": "something commited",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "something commited",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    }
+  ]
+}

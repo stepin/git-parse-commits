@@ -113,6 +113,7 @@ def version_command(as_json: bool):
 def current_version_command(
     as_json: bool,
     tag_prefix: Optional[str],
+    as_tag: bool,
     last_revision: Optional[str],
 ):
     if not last_revision:
@@ -131,6 +132,8 @@ def current_version_command(
                 last_revision,
             ]
         )
+        if not as_tag:
+            version = version[len(tag_prefix):]
     if as_json:
         print('{"current_version": "%s"}' % version)
     else:
@@ -138,7 +141,9 @@ def current_version_command(
 
 
 def last_release_version(
-    tag_prefix: Optional[str], last_revision: Optional[str]
+    tag_prefix: Optional[str],
+    as_tag: bool,
+    last_revision: Optional[str],
 ) -> str:
     if not last_revision:
         last_revision = "HEAD"
@@ -165,15 +170,18 @@ def last_release_version(
             last_revision + "^",
         ]
     )
+    if not as_tag:
+        version = version[len(tag_prefix):]
     return version
 
 
 def last_release_version_command(
     as_json: bool,
     tag_prefix: Optional[str],
+    as_tag: bool,
     last_revision: Optional[str],
 ):
-    version = last_release_version(tag_prefix, last_revision)
+    version = last_release_version(tag_prefix, as_tag, last_revision)
     if as_json:
         print('{"last_release_version": "%s"}' % version)
     else:
@@ -186,7 +194,9 @@ def prepare_range(
     tag_prefix: Optional[str],
 ) -> str:
     if not initial_revision:
-        initial_revision = last_release_version(tag_prefix, last_revision)
+        initial_revision = last_release_version(
+            tag_prefix, True, last_revision
+        )
     if not last_revision:
         last_revision = "HEAD"
     return "%s..%s" % (initial_revision, last_revision)
@@ -416,7 +426,7 @@ def prepare_parsed_info(
     initial_revision: Optional[str],
     last_revision: Optional[str],
 ) -> ParsedInfo:
-    last_release = last_release_version(tag_prefix, last_revision)
+    last_release = last_release_version(tag_prefix, True, last_revision)
     if not initial_revision:
         initial_revision = last_release
     range = prepare_range(initial_revision, last_revision, tag_prefix)
@@ -439,7 +449,7 @@ def prepare_parsed_info(
     if tag_prefix and last_release.startswith(tag_prefix):
         last_release = last_release[len(tag_prefix):]
     current_version = increment_version(last_release, increment)
-    if as_tag and not tag_prefix:
+    if as_tag and tag_prefix:
         current_version = tag_prefix + current_version
         last_release = tag_prefix + last_release
 
@@ -617,7 +627,7 @@ Provides next release version and release notes from git commit messages."""
     )
     current_version.set_defaults(
         func=lambda args: current_version_command(
-            args.json, args.tag_prefix, args.last_revision
+            args.json, args.tag_prefix, args.tag, args.last_revision
         )
     )
 
@@ -626,7 +636,7 @@ Provides next release version and release notes from git commit messages."""
     )
     last_version.set_defaults(
         func=lambda args: last_release_version_command(
-            args.json, args.tag_prefix, args.last_revision
+            args.json, args.tag_prefix, args.tag, args.last_revision
         )
     )
 
