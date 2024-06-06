@@ -1,8 +1,456 @@
 {
   "version": {
-    "last": "0.2.0",
-    "increment": "none",
-    "current": "0.2.0"
+    "last": "2.9.0",
+    "increment": "major",
+    "current": "3.0.0"
   },
-  "commits": []
+  "commits": [
+    {
+      "commit": "7b7fba0534310dffe1b012cf9bda7c77b9c8cd34",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "fix(component1)!: major change, MY-123",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "fix(component1)!: major change, MY-123",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "6454379e72b13d6c457163c594b7263aa25175e8",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "fix!: major change",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "fix!: major change",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "827af0d921a75d74a069fb45de0aed0718275af0",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "something, WIP\n\nBREAKING CHANGE: something1",
+      "headers": [
+        {
+          "type": "wip",
+          "scope": "*",
+          "description": "something, WIP",
+          "group": null,
+          "increment": "major"
+        }
+      ],
+      "notes": {
+        "BREAKING CHANGE": "something1"
+      }
+    },
+    {
+      "commit": "5159983702708c81b2f6e567e54878fccc22c998",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "something 2",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "something 2",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "0741c7cce1a141a1d3349db9ff878d672adaab59",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "something, WIP",
+      "headers": [
+        {
+          "type": "wip",
+          "scope": "*",
+          "description": "something, WIP",
+          "group": null,
+          "increment": "none"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "9678f5e85e7328c21b3cd5a3a42eda96c97057dc",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "light tag case",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "light tag case",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "b2e39ec5d9e99c4e0aacb851f12d9629907871cf",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "Merge branch 'dev/0.5.0-branch'",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "Merge branch 'dev/0.5.0-branch'",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "89177157bc0e04970efe2e40dca55b78b224566f",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "Merge branch 'dev/0.4.0-branch'",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "Merge branch 'dev/0.4.0-branch'",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "5b4c33eebeccdb40d51ce4fcd8205be541a033ff",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "- fix: now it's better for sure\nfeat(compontent1): best feature ever\nchore(compontent1): even better",
+      "headers": [
+        {
+          "type": "chore",
+          "scope": "compontent1",
+          "description": "even better",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "feat",
+          "scope": "compontent1",
+          "description": "best feature ever",
+          "group": "Features",
+          "increment": "minor"
+        },
+        {
+          "type": "fix",
+          "scope": "*",
+          "description": "now it's better for sure",
+          "group": "Fixes",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "c248b3e7408c9e971624329c3041f46c3894e95e",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "feat: feature1\nfix: fix1\nrefactor:refactor1\ndocs: docs1\nperf: perf1\nchore: chore1\nci: ci1\nbuild: build1\nstyle: style1\ntest: test1\nskip: skip1\nwip: wip1\nminor: minor1\ncustom: custom1",
+      "headers": [
+        {
+          "type": "custom",
+          "scope": "*",
+          "description": "custom1",
+          "group": "Features",
+          "increment": "minor"
+        },
+        {
+          "type": "minor",
+          "scope": "*",
+          "description": "minor1",
+          "group": null,
+          "increment": "none"
+        },
+        {
+          "type": "wip",
+          "scope": "*",
+          "description": "wip1",
+          "group": null,
+          "increment": "none"
+        },
+        {
+          "type": "skip",
+          "scope": "*",
+          "description": "skip1",
+          "group": null,
+          "increment": "none"
+        },
+        {
+          "type": "test",
+          "scope": "*",
+          "description": "test1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "style",
+          "scope": "*",
+          "description": "style1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "build",
+          "scope": "*",
+          "description": "build1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "ci",
+          "scope": "*",
+          "description": "ci1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "chore",
+          "scope": "*",
+          "description": "chore1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "perf",
+          "scope": "*",
+          "description": "perf1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "docs",
+          "scope": "*",
+          "description": "docs1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "refactor:refactor1",
+          "group": "Features",
+          "increment": "minor"
+        },
+        {
+          "type": "fix",
+          "scope": "*",
+          "description": "fix1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "feature1",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "4508080326e3437d02c828bff570306198469d7f",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "chore(compontent1): even better",
+      "headers": [
+        {
+          "type": "chore",
+          "scope": "compontent1",
+          "description": "even better",
+          "group": "Other",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "5e80b84b2a391e37f091e1599cfbc796eaedb09a",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "- chore(compontent1): even better",
+      "headers": [
+        {
+          "type": "chore",
+          "scope": "compontent1",
+          "description": "even better",
+          "group": "Other",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "ce2f01f37e6a7ed771666f86ae949620d3ea4eb5",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "feat(compontent1): best feature ever",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "compontent1",
+          "description": "best feature ever",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "afc1d4fa730398a85ee4ca59adeea2872ab038bb",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "- feat(compontent1): best feature ever",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "compontent1",
+          "description": "best feature ever",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "30bf8ec178bd0185167c642326e265b47c54a020",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "- fix: now it's better for sure",
+      "headers": [
+        {
+          "type": "fix",
+          "scope": "*",
+          "description": "now it's better for sure",
+          "group": "Fixes",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "a3465eee360c14e7c559bbb300d360532e2aed1e",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "- fix: now it's better for sure",
+      "headers": [
+        {
+          "type": "fix",
+          "scope": "*",
+          "description": "now it's better for sure",
+          "group": "Fixes",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "b940738fe14fc8289a4c372d8a3835e009f5a542",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "chore(compontent1): even better",
+      "headers": [
+        {
+          "type": "chore",
+          "scope": "compontent1",
+          "description": "even better",
+          "group": "Other",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "21d7e3dbd8ef3f5eda5ef0d68ddf3407e0dfec3f",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "feat(compontent1): best feature ever",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "compontent1",
+          "description": "best feature ever",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "a94fd9a626fffbbda4f44d13e3e985f51924a64d",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "- fix: now it's better for sure",
+      "headers": [
+        {
+          "type": "fix",
+          "scope": "*",
+          "description": "now it's better for sure",
+          "group": "Fixes",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "21ed0607a0173a11e8a9b7b73f33000ccb4aebae",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "raw": "initial",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "*",
+          "description": "initial",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    }
+  ]
 }

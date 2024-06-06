@@ -20,12 +20,12 @@ cd repo
 
 # additional
 set +o pipefail
-REV_1="$(git log --oneline |head -n 3|tail -n 1|awk '{print $1;}')"
-REV_2="$(git log --oneline |head -n 16|tail -n 1|awk '{print $1;}')"
+REV_1="$(git log --oneline |head -n 16|tail -n 1|awk '{print $1;}')"
+REV_2="$(git log --oneline |head -n 3|tail -n 1|awk '{print $1;}')"
 set -o pipefail
 ../../git-parse-commits --json --initial-revision $REV_1 --last-revision $REV_2 releaseNotes | jq . > ../results/X-releaseNotes-range.json
 ../../git-parse-commits --initial-revision $REV_1 --last-revision $REV_2 releaseNotes > ../results/X-releaseNotes-range.md
-../../git-parse-commits -l $REV_1 releaseNotes > ../results/X-l-releaseNotes.md
+../../git-parse-commits -l $REV_2 releaseNotes > ../results/X-l-releaseNotes.md
 
 # all other cases
 ../../git-parse-commits -l 0.2.0 currentVersion  > ../results/0.2.0-currentVersion
