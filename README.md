@@ -6,13 +6,20 @@ This script is to be used in CICD pipelines to provide new version number
 
 Docker image: [stepin/git-parse-commits:latest](https://hub.docker.com/r/stepin/git-parse-commits)
 
+Example how to use with Docker:
+
+```shell
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:1.0.2 releaseVersion
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:1.0.2 releaseNotes
+```
+
 Example usage for Gitlab:
 
 ```yaml
 create_changelog:
   stage: "build"
   image:
-      name: "stepin/git-parse-commits:1.0.0"
+      name: "stepin/git-parse-commits:1.0.2"
       entrypoint: [""]
   variables:
       GIT_DEPTH: "0"
