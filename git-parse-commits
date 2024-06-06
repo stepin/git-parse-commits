@@ -120,6 +120,9 @@ def current_version_command(
         last_revision = "HEAD"
     if tag_prefix is None:
         version = run(["git", "describe", "--tags", "--always", last_revision])
+        if SHA_REGEXP.search(version):
+            short_version = version[:8]
+            version = f"0.1.0-{short_version}"
     else:
         version = run(
             [
@@ -132,13 +135,17 @@ def current_version_command(
                 last_revision,
             ]
         )
-        if not as_tag:
+        if SHA_REGEXP.search(version):
+            short_version = version[:8]
+            version = f"0.1.0-{short_version}"
+        elif not as_tag:
             version = version[len(tag_prefix):]
     if as_json:
         print('{"current_version": "%s"}' % version)
     else:
         print(version)
 
+SHA_REGEXP = re.compile('^[0-9a-f]{5,40}$')
 
 def last_release_version(
     tag_prefix: Optional[str],
@@ -182,6 +189,9 @@ def last_release_version_command(
     last_revision: Optional[str],
 ):
     version = last_release_version(tag_prefix, as_tag, last_revision)
+    if SHA_REGEXP.search(version):
+        short_version = version[:8]
+        version = f"0.1.0-{short_version}"
     if as_json:
         print('{"last_release_version": "%s"}' % version)
     else:
@@ -199,6 +209,8 @@ def prepare_range(
         )
     if not last_revision:
         last_revision = "HEAD"
+    if SHA_REGEXP.search(initial_revision):
+        return last_revision
     return "%s..%s" % (initial_revision, last_revision)
 
 
@@ -430,6 +442,9 @@ def prepare_parsed_info(
     if not initial_revision:
         initial_revision = last_release
     range = prepare_range(initial_revision, last_revision, tag_prefix)
+    if SHA_REGEXP.search(last_release):
+        short_version = last_release[:8]
+        last_release = f"0.1.0-{short_version}"
 
     commits_json_txt = run(["jc", "git", "log", range])
 

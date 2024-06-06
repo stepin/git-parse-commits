@@ -87,6 +87,14 @@ cd ../repo2
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag releaseVersion > ../results/mono2-releaseVersion
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag releaseNotes > ../results/mono2-releaseNotes.md
 
+# no tags case
+cd ../repo4
+../../git-parse-commits currentVersion > ../results/4-currentVersion
+../../git-parse-commits lastReleaseVersion > ../results/4-lastReleaseVersion
+../../git-parse-commits releaseVersion > ../results/4-releaseVersion
+../../git-parse-commits -j releaseNotes | jq . > ../results/4-releaseNotes.json
+
+
 #
 # Diff should contain only dates/sha changes (any other difference means fails):
 cd ../results

@@ -1,0 +1,60 @@
+{
+  "version": {
+    "last": "0.1.0-31dc9df2",
+    "increment": "patch",
+    "current": "0.1.1"
+  },
+  "commits": [
+    {
+      "commit": "de201e75bfd2442d74c875395bf1b54919dc3b9a",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Thu Jun 6 21:12:59 2024 +0400",
+      "raw": "chore(compontent1): even better",
+      "headers": [
+        {
+          "type": "chore",
+          "scope": "compontent1",
+          "description": "even better",
+          "group": "Other",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "31dc9df2eaeb81e42d9a855c301da40f4929942c",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Thu Jun 6 21:12:59 2024 +0400",
+      "raw": "feat(compontent1): best feature ever",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": "compontent1",
+          "description": "best feature ever",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "54b585ba20c094d641699c1563c5e2e9339cac62",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Thu Jun 6 21:12:59 2024 +0400",
+      "raw": "- fix: now it's better for sure",
+      "headers": [
+        {
+          "type": "fix",
+          "scope": "*",
+          "description": "now it's better for sure",
+          "group": "Fixes",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    }
+  ]
+}
