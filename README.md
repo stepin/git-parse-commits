@@ -1,5 +1,5 @@
 # Git Parse Commits
-[![GitHub release](https://img.shields.io/github/release/stepin/git-parse-commits.svg)](https://github.com/stepin/git-parse-commits/releases) [![Build status](https://img.shields.io/github/actions/workflow/status/stepin/git-parse-commits/main.yml)](https://github.com/stepin/git-parse-commits/actions/workflows/main.yml) [![github license badge](https://img.shields.io/github/license/stepin/git-parse-commits)](https://github.com/stepin/git-parse-commits)
+[![GitHub release](https://img.shields.io/github/release/stepin/git-parse-commits.svg)](https://github.com/stepin/git-parse-commits/releases) [![github license badge](https://img.shields.io/github/license/stepin/git-parse-commits)](https://github.com/stepin/git-parse-commits)
 
 This script is to be used in CICD pipelines to provide new version number
 (bases on commit messages) and releses notes (also bases on commit messages).
