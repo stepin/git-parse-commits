@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -eEuo pipefail
+cd "$(dirname "$0")"
+
+cd ..
+
+ktlint --format git-parse-commits.main.kts

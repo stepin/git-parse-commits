@@ -14,7 +14,7 @@
       "headers": [
         {
           "type": "feat",
-          "scope": "*",
+          "scope": null,
           "description": "something commited",
           "group": "Features",
           "increment": "minor"

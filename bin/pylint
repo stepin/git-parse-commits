@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -eEuo pipefail
-cd "$(dirname "$0")"
-
-cd ..
-
-poetry run black --line-length 79 git-parse-commits
-poetry run pycodestyle git-parse-commits
-poetry run flake8 git-parse-commits

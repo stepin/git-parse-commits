@@ -1,15 +1,13 @@
-#NOTE: jc requires gcc and there is no package for alpine, that's why it's not alpine base image
-FROM python:3
+FROM stepin/kotlin-scripting
 
-RUN pip3 install jc \
-&& apt-get update \
-&& apt-get install -y jq \
-&& rm -rf /var/lib/apt/lists/* \
-&& mkdir /app
+RUN apt-get update \
+&& apt-get -y install jc git \
+&& rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-ENV PATH="${PATH}:/app"
+COPY git-parse-commits.main.kts ./
 
-COPY git-parse-commits ./
+# Cache dependencies and compilation result for better start-up speed
+ENV KOTLIN_MAIN_KTS_COMPILED_SCRIPTS_CACHE_DIR /app
+RUN /app/git-parse-commits.main.kts version
 
-ENTRYPOINT ["/app/git-parse-commits"]
+ENTRYPOINT ["/app/git-parse-commits.main.kts"]

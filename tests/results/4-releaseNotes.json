@@ -1,8 +1,8 @@
 {
   "version": {
     "last": "0.1.0-31dc9df2",
-    "increment": "patch",
-    "current": "0.1.1"
+    "increment": "minor",
+    "current": "0.2.0"
   },
   "commits": [
     {
@@ -48,7 +48,7 @@
       "headers": [
         {
           "type": "fix",
-          "scope": "*",
+          "scope": null,
           "description": "now it's better for sure",
           "group": "Fixes",
           "increment": "patch"

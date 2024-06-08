@@ -11,9 +11,6 @@
 - (c248b3e) refactor:refactor1
 - (c248b3e) feature1
 - (ce2f01f) compontent1: best feature ever
-- (afc1d4f) compontent1: best feature ever
-- (21d7e3d) compontent1: best feature ever
-- (21ed060) initial
 
 ### Fixes
 
@@ -22,8 +19,6 @@
 - (c248b3e) docs: docs1
 - (c248b3e) fix1
 - (30bf8ec) now it's better for sure
-- (a3465ee) now it's better for sure
-- (a94fd9a) now it's better for sure
 
 ### Other
 
@@ -35,4 +30,3 @@
 - (c248b3e) chore: chore1
 - (4508080) chore(compontent1): even better
 - (5e80b84) chore(compontent1): even better
-- (b940738) chore(compontent1): even better

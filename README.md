@@ -9,8 +9,8 @@ Docker image: [stepin/git-parse-commits:latest](https://hub.docker.com/r/stepin/
 Example how to use with Docker:
 
 ```shell
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:1.0.2 releaseVersion
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:1.0.2 releaseNotes
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.0.0 releaseVersion
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.0.0 releaseNotes
 ```
 
 Example usage for Gitlab:
@@ -19,7 +19,7 @@ Example usage for Gitlab:
 create_changelog:
   stage: "build"
   image:
-      name: "stepin/git-parse-commits:1.0.2"
+      name: "stepin/git-parse-commits:2.0.0"
       entrypoint: [""]
   variables:
       GIT_DEPTH: "0"
@@ -75,31 +75,25 @@ release:
 ```
 docker run --rm -it stepin/git-parse-commits --help
 
-usage: git-parse-commits [-h] [-j] [-t [TAG_PREFIX]] [-s [SCOPE]] [-i [INITIAL_REVISION]] [-l [LAST_REVISION]] [--tag]
-                         {version,currentVersion,lastReleaseVersion,releaseVersion,releaseNotes} ...
+Usage: git-parse-commits [<options>] <command> [<args>]...
 
-Provides next release version and release notes from git commit messages.
+  Provides next release version and release notes from git commit messages.
 
-positional arguments:
-  {version,currentVersion,lastReleaseVersion,releaseVersion,releaseNotes}
-    version             Prints version of this tool
-    currentVersion      Prints current version (useful for non-release builds)
-    lastReleaseVersion  Prints version of last release
-    releaseVersion      Prints version of next release from git commit messages
-    releaseNotes        Prints release notes from git commit messages
+Options:
+  -j, --json                     output in json format
+  -t, --tag-prefix=<text>        prefix for tags (optional)
+  --tag                          add tag prefix to versions (only if tag prefix is defined)
+  -s, --scope=<text>             scope to filter release note items
+  -i, --initial-revision=<text>  start range from next revision
+  -l, --last-revision=<text>     stop on this revision
+  -h, --help                     Show this message and exit
 
-options:
-  -h, --help            show this help message and exit
-  -j, --json            Output in json format
-  -t [TAG_PREFIX], --tag-prefix [TAG_PREFIX]
-                        prefix for tags (optional)
-  -s [SCOPE], --scope [SCOPE]
-                        scope to filter release note items
-  -i [INITIAL_REVISION], --initial-revision [INITIAL_REVISION]
-                        start range from next revision
-  -l [LAST_REVISION], --last-revision [LAST_REVISION]
-                        stop on this revision
-  --tag                 add tag prefix to version (only if tag prefix is defined)
+Commands:
+  version             Prints version of this tool
+  currentVersion      Prints current version (useful for non-release builds)
+  lastReleaseVersion  Prints version of last release
+  releaseVersion      Prints version of next release from git commit messages
+  releaseNotes        Prints release notes from git commit messages
 ```
 
 
@@ -240,13 +234,17 @@ Feel free to send MRs/patches.
 
 Following components should be installed locally (or in Docker):
 
-- Python 3
+- Kotlin
 - git
 - bash
 - jq https://jqlang.github.io/jq/
 - jc https://github.com/kellyjonbrazil/jc
 
 ```bash
-brew install jq jc
-poetry install
+brew install jq jc kotlin
 ```
+
+Currently, it's not possible to split single script to several files. So, it will be when it will
+be possible (like around Kotlin 2.0.20).
+
+Also, it's not clear how to write unit tests for this script. Ping me if you know some example / article.
