@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -eEuo pipefail
 
-# NOTE: this file is to skip test changed during initial v2 release
+# NOTE: this file is for backward compatibility
 
 "$(dirname "$0")"/git-parse-commits.main.kts "$@"
