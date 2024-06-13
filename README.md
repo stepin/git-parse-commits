@@ -1,16 +1,37 @@
 # Git Parse Commits
 [![GitHub release](https://img.shields.io/github/release/stepin/git-parse-commits.svg)](https://github.com/stepin/git-parse-commits/releases) [![github license badge](https://img.shields.io/github/license/stepin/git-parse-commits)](https://github.com/stepin/git-parse-commits)
 
+## Intro
+
+When we create release in Gitea / Gitlab / Github we need to fill 3 fields:
+- Release name
+- Tag name
+- Release description
+- Tag commit message
+
+Yes, it's not that hard to fill it every time automatically but it anyway takes time,
+and it's error-prone process.
+
+So, this script is introduced to automate this process. Some key points:
+- Human decides what will be in release note but decision point is moved to MR merge time (when
+we specify MR commit message)
+- Human decides when release should happen (start manual job)
+- If something is not working it's still possible to create release from UI without these CI job
+
+
+## Details
+
 This script is to be used in CICD pipelines to provide new version number
-(bases on commit messages) and releses notes (also bases on commit messages).
+(bases on commit messages) and releases notes (also bases on commit messages).
 
 Docker image: [stepin/git-parse-commits:latest](https://hub.docker.com/r/stepin/git-parse-commits)
 
 Example how to use with Docker:
 
 ```shell
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.0.0 releaseVersion
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.0.0 releaseNotes
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.1.0 releaseVersion
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.1.0 releaseNotes
+docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.1.0 releaseNotes --short
 ```
 
 Example usage for Gitlab:
@@ -19,7 +40,7 @@ Example usage for Gitlab:
 create_changelog:
   stage: "build"
   image:
-      name: "stepin/git-parse-commits:2.0.0"
+      name: "stepin/git-parse-commits:2.1.0"
       entrypoint: [""]
   variables:
       GIT_DEPTH: "0"
@@ -31,11 +52,13 @@ create_changelog:
   - echo "CURRENT_VERSION=$CURRENT_VERSION" >> relNotes.env
   - cat relNotes.env
   - git-parse-commits releaseNotes > releaseNotes.md
+  - git-parse-commits releaseNotes --short > gitTagCommitMessage.txt
   artifacts:
       reports:
           dotenv: relNotes.env
       paths:
       - releaseNotes.md
+      - gitTagCommitMessage.txt
       expire_in: 1 day
   rules:
   - if: $CI_MERGE_REQUEST_IID
@@ -51,7 +74,7 @@ release:
   - echo "Release $RELEASE_VERSION"
   release:
       tag_name: "$RELEASE_VERSION"
-      tag_message: "Release $RELEASE_VERSION"
+      tag_message: "gitTagCommitMessage.txt"
       description: "releaseNotes.md"
   assets:
     links:
@@ -73,19 +96,19 @@ release:
 ## Help
 
 ```
-docker run --rm -it stepin/git-parse-commits --help
+$ docker run --rm -it stepin/git-parse-commits --help
 
 Usage: git-parse-commits [<options>] <command> [<args>]...
 
   Provides next release version and release notes from git commit messages.
 
 Options:
-  -j, --json                     output in json format
-  -t, --tag-prefix=<text>        prefix for tags (optional)
-  --tag                          add tag prefix to versions (only if tag prefix is defined)
-  -s, --scope=<text>             scope to filter release note items
-  -i, --initial-revision=<text>  start range from next revision
-  -l, --last-revision=<text>     stop on this revision
+  -j, --json                     Output in json format
+  -t, --tag-prefix=<text>        Prefix for tags (optional)
+  --tag                          Add tag prefix to versions (only if tag prefix is defined)
+  -s, --scope=<text>             Scope to filter release note items
+  -i, --initial-revision=<text>  Start range from next revision
+  -l, --last-revision=<text>     Stop on this revision
   -h, --help                     Show this message and exit
 
 Commands:
@@ -94,6 +117,15 @@ Commands:
   lastReleaseVersion  Prints version of last release
   releaseVersion      Prints version of next release from git commit messages
   releaseNotes        Prints release notes from git commit messages
+
+$ docker run --rm -it stepin/git-parse-commits releaseNotes -h
+Usage: git-parse-commits releaseNotes [<options>]
+
+  Prints release notes from git commit messages
+
+Options:
+  -s, --short  Switch output to short format to be used as description of git tag
+  -h, --help   Show this message and exit
 ```
 
 

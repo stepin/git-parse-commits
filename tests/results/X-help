@@ -3,12 +3,12 @@ Usage: git-parse-commits [<options>] <command> [<args>]...
   Provides next release version and release notes from git commit messages.
 
 Options:
-  -j, --json                     output in json format
-  -t, --tag-prefix=<text>        prefix for tags (optional)
-  --tag                          add tag prefix to versions (only if tag prefix is defined)
-  -s, --scope=<text>             scope to filter release note items
-  -i, --initial-revision=<text>  start range from next revision
-  -l, --last-revision=<text>     stop on this revision
+  -j, --json                     Output in json format
+  -t, --tag-prefix=<text>        Prefix for tags (optional)
+  --tag                          Add tag prefix to versions (only if tag prefix is defined)
+  -s, --scope=<text>             Scope to filter release note items
+  -i, --initial-revision=<text>  Start range from next revision
+  -l, --last-revision=<text>     Stop on this revision
   -h, --help                     Show this message and exit
 
 Commands:

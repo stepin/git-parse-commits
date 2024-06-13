@@ -184,7 +184,8 @@ class GitCommitsParser {
         if (!scope.isNullOrEmpty()) {
             parsedCommits =
                 parsedCommits.filter { commit ->
-                    commit.headers = commit.headers.filter { it.scope.isNullOrEmpty() || it.scope == scope }
+                    commit.headers =
+                        commit.headers.filter { it.scope.isNullOrEmpty() || it.scope == scope }
                     commit.headers.isNotEmpty()
                 }
         }
@@ -416,29 +417,29 @@ class GitParseCommits :
         printHelpOnEmptyArgs = true,
         help = "Provides next release version and release notes from git commit messages.",
     ) {
-    private val json by option("-j", "--json", help = "output in json format").flag()
+    private val json by option("-j", "--json", help = "Output in json format").flag()
     private val tagPrefix by option(
         "-t",
         "--tag-prefix",
-        help = "prefix for tags (optional)",
+        help = "Prefix for tags (optional)",
     ).default("")
     private val tag by option(
-        help = "add tag prefix to versions (only if tag prefix is defined)",
+        help = "Add tag prefix to versions (only if tag prefix is defined)",
     ).flag()
     private val scope by option(
         "-s",
         "--scope",
-        help = "scope to filter release note items",
+        help = "Scope to filter release note items",
     ).default("")
     private val initialRevision by option(
         "-i",
         "--initial-revision",
-        help = "start range from next revision",
+        help = "Start range from next revision",
     ).default("")
     private val lastRevision by option(
         "-l",
         "--last-revision",
-        help = "stop on this revision",
+        help = "Stop on this revision",
     ).default("HEAD")
 
     override fun run() {
@@ -562,6 +563,11 @@ class ReleaseNotes(
         name = "releaseNotes",
         help = "Prints release notes from git commit messages",
     ) {
+    private val asShort by option(
+        "-s",
+        "--short",
+        help = "Switch output to short format to be used as description of git tag",
+    ).flag()
     private val config by requireObject<CliConfig>()
 
     override fun run() {
@@ -577,17 +583,21 @@ class ReleaseNotes(
             if (config.asJson) {
                 Json.encodeToString<GitCommitsParser.ParsedInfo>(parsedInfo)
             } else {
-                formatReleaseNotes(parsedInfo)
+                formatReleaseNotes(parsedInfo, asShort)
             }
         println(result)
     }
 
-    private fun formatReleaseNotes(parsedInfo: GitCommitsParser.ParsedInfo): String {
+    private fun formatReleaseNotes(
+        parsedInfo: GitCommitsParser.ParsedInfo,
+        asShort: Boolean,
+    ): String {
         val linesPerGroup = getReleaseLinesPerGroup(parsedInfo)
-        val features = groupToText("Features", linesPerGroup["Features"])
-        val fixes = groupToText("Fixes", linesPerGroup["Fixes"])
-        val other = groupToText("Other", linesPerGroup["Other"])
-        return listOfNotNull(features, fixes, other).joinToString("\n\n")
+        val features = groupToText("Features", linesPerGroup["Features"], asShort)
+        val fixes = groupToText("Fixes", linesPerGroup["Fixes"], asShort)
+        val other = groupToText("Other", linesPerGroup["Other"], asShort)
+        val separator = if (asShort) "\n" else "\n\n"
+        return listOfNotNull(features, fixes, other).joinToString(separator)
     }
 
     data class ReleaseLine(
@@ -624,6 +634,36 @@ class ReleaseNotes(
     }
 
     private fun groupToText(
+        header: String,
+        lines: Set<ReleaseLine>?,
+        asShort: Boolean,
+    ): String? {
+        if (asShort) {
+            return groupToTextShort(lines)
+        }
+        return groupToTextFull(header, lines)
+    }
+
+    private fun groupToTextShort(lines: Set<ReleaseLine>?): String? {
+        if (lines.isNullOrEmpty()) return null
+        val result = mutableListOf<String>()
+        lines.forEach { line ->
+            val scope = if (line.scope != "*" && line.scope != null) line.scope else ""
+            var type =
+                if (scope.isNotEmpty()) {
+                    "${line.type}($scope)"
+                } else {
+                    line.type
+                }
+            if (type.isNotEmpty()) {
+                type += ": "
+            }
+            result.add("- (${line.sha}) ${type}${line.description}")
+        }
+        return result.joinToString("\n")
+    }
+
+    private fun groupToTextFull(
         header: String,
         lines: Set<ReleaseLine>?,
     ): String? {
