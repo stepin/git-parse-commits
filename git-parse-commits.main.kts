@@ -568,6 +568,11 @@ class ReleaseNotes(
         "--short",
         help = "Switch output to short format to be used as description of git tag",
     ).flag()
+    private val asOneline by option(
+        "-l",
+        "--one-line",
+        help = "Switch output to one-line format to be used as description of git tag",
+    ).flag()
     private val config by requireObject<CliConfig>()
 
     override fun run() {
@@ -583,19 +588,31 @@ class ReleaseNotes(
             if (config.asJson) {
                 Json.encodeToString<GitCommitsParser.ParsedInfo>(parsedInfo)
             } else {
-                formatReleaseNotes(parsedInfo, asShort)
+                formatReleaseNotes(parsedInfo, asShort, asOneline)
             }
         println(result)
     }
 
     private fun formatReleaseNotes(
         parsedInfo: GitCommitsParser.ParsedInfo,
-        asShort: Boolean,
+        asShortInitial: Boolean,
+        asOneline: Boolean,
     ): String {
+        val asShort = asShortInitial || asOneline
+
         val linesPerGroup = getReleaseLinesPerGroup(parsedInfo)
         val features = groupToText("Features", linesPerGroup["Features"], asShort)
         val fixes = groupToText("Fixes", linesPerGroup["Fixes"], asShort)
         val other = groupToText("Other", linesPerGroup["Other"], asShort)
+
+        if (asOneline) {
+            val result = listOfNotNull(features, fixes, other)
+                .joinToString("\n")
+                .split("\n")
+                .firstOrNull()
+            if (result.isNullOrEmpty()) return ""
+            return "$result..."
+        }
         val separator = if (asShort) "\n" else "\n\n"
         return listOfNotNull(features, fixes, other).joinToString(separator)
     }
@@ -658,7 +675,7 @@ class ReleaseNotes(
             if (type.isNotEmpty()) {
                 type += ": "
             }
-            result.add("- (${line.sha}) ${type}${line.description}")
+            result.add("- ${type}${line.description}")
         }
         return result.joinToString("\n")
     }

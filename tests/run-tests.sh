@@ -16,7 +16,8 @@ cd repo
 ../../git-parse-commits releaseVersion > ../results/X-releaseVersion
 ../../git-parse-commits -j releaseVersion | jq . > ../results/X-releaseVersion.json
 ../../git-parse-commits releaseNotes > ../results/X-releaseNotes.md
-../../git-parse-commits releaseNotes -s > ../results/X-releaseNotes.txt
+../../git-parse-commits releaseNotes --short > ../results/X-releaseNotes.txt
+../../git-parse-commits releaseNotes --one-line > ../results/X-releaseNotes1.txt
 ../../git-parse-commits -j releaseNotes | jq . > ../results/X-releaseNotes.json
 
 # additional
@@ -84,11 +85,13 @@ cd ../repo2
 ../../git-parse-commits -s component1 --tag-prefix component1- releaseVersion > ../results/mono1-releaseVersion
 ../../git-parse-commits -s component1 --tag-prefix component1- releaseNotes > ../results/mono1-releaseNotes.md
 ../../git-parse-commits -s component1 --tag-prefix component1- releaseNotes -s > ../results/mono1-releaseNotes.txt
+../../git-parse-commits -s component1 --tag-prefix component1- releaseNotes -l > ../results/mono1-releaseNotes1.txt
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag currentVersion > ../results/mono2-currentVersion
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag lastReleaseVersion > ../results/mono2-lastReleaseVersion
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag releaseVersion > ../results/mono2-releaseVersion
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag releaseNotes > ../results/mono2-releaseNotes.md
 ../../git-parse-commits -s component2 --tag-prefix component2- --tag releaseNotes -s > ../results/mono2-releaseNotes.txt
+../../git-parse-commits -s component2 --tag-prefix component2- --tag releaseNotes -l > ../results/mono2-releaseNotes1.txt
 
 # no tags case
 cd ../repo4

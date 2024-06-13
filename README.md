@@ -124,8 +124,9 @@ Usage: git-parse-commits releaseNotes [<options>]
   Prints release notes from git commit messages
 
 Options:
-  -s, --short  Switch output to short format to be used as description of git tag
-  -h, --help   Show this message and exit
+  -s, --short     Switch output to short format to be used as description of git tag
+  -l, --one-line  Switch output to one-line format to be used as description of git tag
+  -h, --help      Show this message and exit
 ```
 
 
