@@ -5,6 +5,7 @@ USER root
 RUN apt-get update \
 && apt-get -y install pipx git \
 && rm -rf /var/lib/apt/lists/*
+RUN git config --system --add safe.directory '*'
 USER app
 
 # Install jc
