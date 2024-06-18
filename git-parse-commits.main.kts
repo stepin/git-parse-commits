@@ -625,10 +625,11 @@ class ReleaseNotes(
         val other = groupToText("Other", linesPerGroup["Other"], asShort)
 
         if (asOneline) {
-            val result = listOfNotNull(features, fixes, other)
-                .joinToString("\n")
-                .split("\n")
-                .firstOrNull()
+            val result =
+                listOfNotNull(features, fixes, other)
+                    .joinToString("\n")
+                    .split("\n")
+                    .firstOrNull()
             if (result.isNullOrEmpty()) return ""
             return "$result..."
         }
