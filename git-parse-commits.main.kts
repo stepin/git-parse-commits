@@ -22,6 +22,16 @@ import kotlinx.serialization.json.Json
 import java.io.IOException
 
 
+fun fatal(
+    exitCode: Int = 0,
+    vararg messages: String,
+) {
+    for (message in messages) {
+        println(message)
+    }
+    Runtime.getRuntime().exit(exitCode)
+}
+
 fun run(vararg cmd: String): String {
     try {
         val process = Runtime.getRuntime().exec(cmd)
@@ -30,11 +40,13 @@ fun run(vararg cmd: String): String {
         val stdout = process.inputStream.bufferedReader().readText()
         if (result != 0) {
             val stderr = process.errorStream.bufferedReader().readText()
-            println("fatal: failed command ${cmd.toList()}")
-            println("output: $stdout")
-            println("error output: $stderr")
-            println("tip: most common reason: incorrect git commit SHA")
-            Runtime.getRuntime().exit(2)
+            fatal(
+                exitCode = 2,
+                "fatal: failed command ${cmd.toList()}",
+                "output: $stdout",
+                "error output: $stderr",
+                "tip: most common reason: incorrect git commit SHA",
+            )
         }
         return stdout.trim()
     } catch (e: IOException) {
@@ -380,7 +392,14 @@ class GitCommitsParser {
         version: String,
         increment: IncrementType,
     ): String {
-        val versionParts = "v|\\.|\\-|\\+".toRegex().split(version)
+        val versionParts = "\\.|\\-|\\+".toRegex().split(version)
+        if (versionParts[0].isEmpty() || versionParts[1].isEmpty() || versionParts[2].isEmpty()) {
+            fatal(
+                exitCode = 3,
+                "version '$version' looks incorrect.",
+                "tip: did you forget --tag-prefix option?",
+            )
+        }
         var major = versionParts[0].toInt()
         var minor = versionParts[1].toInt()
         var patch = versionParts[2].toInt()
