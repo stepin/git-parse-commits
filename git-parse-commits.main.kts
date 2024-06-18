@@ -177,7 +177,7 @@ class GitCommitsParser {
                 lastReleaseInfo.version
             }
 
-        val commitsJson = run("jc", "git", "log", range)
+        val commitsJson = run("jc", "git", "log", "--no-merges", range)
         val rawCommits = json.decodeFromString<List<RawCommit>>(commitsJson)
 
         var parsedCommits = rawCommits.map { parseCommit(it) }
