@@ -682,7 +682,7 @@ class ReleaseNotes(
 
     private fun groupToTextShort(lines: Set<ReleaseLine>?): String? {
         if (lines.isNullOrEmpty()) return null
-        val result = mutableListOf<String>()
+        val result = mutableSetOf<String>()
         lines.forEach { line ->
             val scope = if (line.scope != "*" && line.scope != null) line.scope else ""
             var type =
@@ -704,7 +704,7 @@ class ReleaseNotes(
         lines: Set<ReleaseLine>?,
     ): String? {
         if (lines.isNullOrEmpty()) return null
-        val result = mutableListOf("### $header\n")
+        val result = mutableSetOf("### $header\n")
         lines.forEach { line ->
             val scope = if (line.scope != "*" && line.scope != null) line.scope else ""
             var type =
