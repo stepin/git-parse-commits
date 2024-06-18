@@ -1,7 +1,6 @@
 ### Features
 
 - (6aef24f) component1: something commited
-- (a43c63f) Merge branch 'dev/0.4.0-branch'
 - (d6720e8) component1: best feature ever
 
 ### Fixes

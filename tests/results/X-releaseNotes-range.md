@@ -4,8 +4,6 @@
 - (6454379) fix!: major change
 - (5159983) something 2
 - (9678f5e) light tag case
-- (b2e39ec) Merge branch 'dev/0.5.0-branch'
-- (8917715) Merge branch 'dev/0.4.0-branch'
 - (5b4c33e) compontent1: best feature ever
 - (c248b3e) custom: custom1
 - (c248b3e) refactor:refactor1

@@ -1,5 +1,4 @@
 - feat(component1): something commited
-- feat: Merge branch 'dev/0.4.0-branch'
 - feat(component1): best feature ever
 - fix: now it's better for sure
 - chore(component1): even better

@@ -110,40 +110,6 @@
       "notes": {}
     },
     {
-      "commit": "b2e39ec5d9e99c4e0aacb851f12d9629907871cf",
-      "author": "Author One",
-      "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
-      "raw": "Merge branch 'dev/0.5.0-branch'",
-      "headers": [
-        {
-          "type": "feat",
-          "scope": null,
-          "description": "Merge branch 'dev/0.5.0-branch'",
-          "group": "Features",
-          "increment": "minor"
-        }
-      ],
-      "notes": {}
-    },
-    {
-      "commit": "89177157bc0e04970efe2e40dca55b78b224566f",
-      "author": "Author One",
-      "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
-      "raw": "Merge branch 'dev/0.4.0-branch'",
-      "headers": [
-        {
-          "type": "feat",
-          "scope": null,
-          "description": "Merge branch 'dev/0.4.0-branch'",
-          "group": "Features",
-          "increment": "minor"
-        }
-      ],
-      "notes": {}
-    },
-    {
       "commit": "5b4c33eebeccdb40d51ce4fcd8205be541a033ff",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
