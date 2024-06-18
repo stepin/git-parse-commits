@@ -29,9 +29,9 @@ Docker image: [stepin/git-parse-commits:latest](https://hub.docker.com/r/stepin/
 Example how to use with Docker:
 
 ```shell
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.1.0 releaseVersion
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.1.0 releaseNotes
-docker run --rm -it -v "$(PWD):/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.1.0 releaseNotes --short
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.2.2 releaseVersion
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.2.2 releaseNotes
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.2.2 releaseNotes --short
 ```
 
 Example usage for Gitlab:
@@ -40,7 +40,7 @@ Example usage for Gitlab:
 create_changelog:
   stage: "build"
   image:
-      name: "stepin/git-parse-commits:2.1.0"
+      name: "stepin/git-parse-commits:2.2.2"
       entrypoint: [""]
   variables:
       GIT_DEPTH: "0"
