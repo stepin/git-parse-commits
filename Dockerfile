@@ -11,7 +11,7 @@ USER app
 # Install jc
 RUN pipx ensurepath \
     && pipx install jc
-ENV PATH $PATH:/app/.local/bin/
+ENV PATH=$PATH:/app/.local/bin/
 
 COPY git-parse-commits git-parse-commits.main.kts ./
 # Cache libraries and compilation result
