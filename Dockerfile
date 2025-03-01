@@ -1,4 +1,4 @@
-FROM stepin/kotlin-scripting
+FROM stepin/kotlin-scripting:2.1.10
 
 # Install pipx for jc and git
 USER root
