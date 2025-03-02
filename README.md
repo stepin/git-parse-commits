@@ -3,20 +3,33 @@
 
 ## Intro
 
-When we create release in Gitea / Gitlab / Github we need to fill 3 fields:
+When we create release in Gitea / Gitlab / Github we need to fill 4 fields:
 - Release name
 - Tag name
 - Release description
 - Tag commit message
 
-Yes, it's not that hard to fill it every time automatically but it anyway takes time,
-and it's error-prone process.
+For releases there are 2 main cases: pre-releases and releases.
 
-So, this script is introduced to automate this process. Some key points:
+Yes, it's not that hard to fill it every time automatically but it anyway takes time,
+and it's an error-prone process.
+
+So, this script is introduced to automate this task. Some key points:
 - Human decides what will be in release note but decision point is moved to MR merge time (when
 we specify MR commit message)
 - Human decides when release should happen (start manual job)
-- If something is not working it's still possible to create release from UI without these CI job
+- If something is not working it's still possible to create release from UI without these CI jobs
+
+
+## Features
+
+- Detects version of current (old) release, next release or pre-release from tags and tag descriptions.
+- Creates release notes in Markdown and plain-text formats
+- Supports multiline conventional commits (multiple lines to changelog from 1 commit)
+- Supports semver tags (like `1.2.3` or `1.2.3-my-pre-release.1`)
+- Supports monorepo tags (tags with prefixes like `componentX-1.2.3`)
+- Supports tag prefixes like `v`
+- JSON output for easier automation
 
 
 ## Details
@@ -26,71 +39,144 @@ This script is to be used in CICD pipelines to provide new version number
 
 Docker image: [stepin/git-parse-commits:latest](https://hub.docker.com/r/stepin/git-parse-commits)
 
-Example how to use with Docker:
+### Example how to use with Docker
 
 ```shell
-docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.2.2 releaseVersion
-docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.2.2 releaseNotes
-docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.2.2 releaseNotes --short
+# it can be used as version for pre-preleases
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.3.0 currentVersion
+# it can be used as version for releases
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.3.0 releaseVersion
+# it's for plain-text release notes
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.3.0 releaseNotes --short
+# it's for Markdown release notes
+docker run --rm -it -v "${PWD}:/git" -w /git --user "$(id -u)" stepin/git-parse-commits:2.3.0 releaseNotes
 ```
 
-Example usage for Gitlab:
+### Example usage for Gitlab
 
 ```yaml
 create_changelog:
   stage: "build"
   image:
-      name: "stepin/git-parse-commits:2.2.2"
-      entrypoint: [""]
+      name: "stepin/git-parse-commits:2.3.0"
+      entrypoint: [ "" ]
   variables:
       GIT_DEPTH: "0"
   script:
-  - git-parse-commits version
+  - if $(git rev-parse --is-shallow-repository); then git fetch --unshallow ; fi
   - CURRENT_VERSION="$(git-parse-commits currentVersion)"
   - RELEASE_VERSION="$(git-parse-commits releaseVersion)"
   - echo "RELEASE_VERSION=$RELEASE_VERSION" >> relNotes.env
   - echo "CURRENT_VERSION=$CURRENT_VERSION" >> relNotes.env
   - cat relNotes.env
-  - git-parse-commits releaseNotes > releaseNotes.md
-  - git-parse-commits releaseNotes --short > gitTagCommitMessage.txt
+  - git-parse-commits releaseNotes | tee releaseNotes.md
+  - git-parse-commits releaseNotes --short | tee releaseNotes.txt
   artifacts:
       reports:
           dotenv: relNotes.env
       paths:
       - releaseNotes.md
-      - gitTagCommitMessage.txt
+      - releaseNotes.txt
       expire_in: 1 day
   rules:
   - if: $CI_MERGE_REQUEST_IID
   - if: $CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"
   - if: $CI_COMMIT_REF_NAME == "release/*" && $CI_PIPELINE_SOURCE != "schedule"
+  - if: $CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+$/
+  needs: [ ]
+
+create_changelog_prerelease:
+  stage: "build"
+  image:
+    name: "stepin/git-parse-commits:2.3.0"
+    entrypoint: [ "" ]
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - if $(git rev-parse --is-shallow-repository); then git fetch --unshallow ; fi
+    - CURRENT_VERSION="$(git-parse-commits -pre currentVersion)"
+    - RELEASE_VERSION="$(git-parse-commits -pre releaseVersion)"
+    - echo "RELEASE_VERSION=$RELEASE_VERSION" >> relNotes.env
+    - echo "CURRENT_VERSION=$CURRENT_VERSION" >> relNotes.env
+    - cat relNotes.env
+    - git-parse-commits -pre releaseNotes | tee releaseNotes.md
+    - git-parse-commits -pre releaseNotes --short | tee releaseNotes.txt
+  artifacts:
+    reports:
+      dotenv: relNotes.env
+    paths:
+      - releaseNotes.md
+      - releaseNotes.txt
+    expire_in: 1 day
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+-.*/
+  needs: [ ]
 
 release:
   stage: "release"
   image:
-      name: "registry.gitlab.com/gitlab-org/release-cli:latest"
-      entrypoint: [""]
+    name: registry.gitlab.com/gitlab-org/cli:latest
+    entrypoint: [ "" ]
+  before_script:
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git remote remove tag-origin || true
+    - git remote add tag-origin "https://MY_TOKEN_NAME:$MY_TAGS_PUSH_TOKEN@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_HOST --api-protocol $CI_SERVER_PROTOCOL
   script:
-  - echo "Release $RELEASE_VERSION"
-  release:
-      tag_name: "$RELEASE_VERSION"
-      tag_message: "gitTagCommitMessage.txt"
-      description: "releaseNotes.md"
-  assets:
-    links:
-    - name: "Container Image $CI_COMMIT_TAG"
-      url: "https://$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA"
-  needs:
-  - "create_changelog"
+    - echo "Release $RELEASE_VERSION"
+    - git tag -F releaseNotes.txt "$RELEASE_VERSION"
+    - git push tag-origin tag "$RELEASE_VERSION"
+    - |
+      glab release create "$RELEASE_VERSION" --name "Pre-release $RELEASE_VERSION" \
+        --ref "$CI_COMMIT_SHA" \
+        --notes-file "releaseNotes.md"
   rules:
-  - if: $CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"
-    when: manual
-    allow_failure: true
-  - if: $CI_COMMIT_REF_NAME == "release/*" && $CI_PIPELINE_SOURCE != "schedule"
-    when: manual
-    allow_failure: true
+    -   if: $CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"
+        when: manual
+        allow_failure: true
+    -   if: $CI_COMMIT_REF_NAME == "release/*" && $CI_PIPELINE_SOURCE != "schedule"
+        when: manual
+        allow_failure: true
+    -   if: $CI_MERGE_REQUEST_IID
+        when: manual
+        allow_failure: true
+  needs:
+    - "create_changelog"
+
+pre_release:
+  stage: "release"
+  image:
+    name: registry.gitlab.com/gitlab-org/cli:latest
+    entrypoint: [ "" ]
+  before_script:
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git remote remove tag-origin || true
+    - git remote add tag-origin "https://MY_TOKEN_NAME:$MY_TAGS_PUSH_TOKEN@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_HOST --api-protocol $CI_SERVER_PROTOCOL
+  script:
+    - echo "Release $CURRENT_VERSION"
+    - git tag -F releaseNotes.txt "$CURRENT_VERSION"
+    - git push tag-origin tag "$CURRENT_VERSION"
+    - |
+      glab release create "$CURRENT_VERSION" --name "Pre-release $CURRENT_VERSION" \
+        --ref "$CI_COMMIT_SHA" \
+        --notes-file "releaseNotes.md"
+  rules:
+    -   if: $CI_MERGE_REQUEST_IID
+        when: manual
+        allow_failure: true
+  needs:
+    - "create_changelog"
 ```
 (CURRENT_VERSION can be used for non-release builds)
+
+Gitlab don't support multiline variables in dotenv. Also, `release` keyword and `release-cli`
+doesn't support file as input for `tag_message` (only as input for `description`). So, it means
+that `release` keyword can't be used in practice for our case. As workaround, there is
+`releaseNotes --one-line` that produces only 1 line and can be used for `tag_message` but in this
+case release notes will be only in release page in Gitlab but not in tag message in Git.
 
 
 ## Help
@@ -109,6 +195,7 @@ Options:
   -s, --scope=<text>             Scope to filter release note items
   -i, --initial-revision=<text>  Start range from next revision
   -l, --last-revision=<text>     Stop on this revision
+  -pre, --allow-pre-releases     Don't drop pre-release tags
   -h, --help                     Show this message and exit
 
 Commands:
@@ -141,8 +228,12 @@ it's better to use individual MRs. If not -- you are in a good company, this rep
 
 ### How it differs from https://github.com/git-chglog/git-chglog ?
 
-- multiple header lines support
+- multiple header lines support for single commit
 - release version calculation
+
+### How it differs from https://github.com/choffmeister/git-describe-semver ?
+
+- release notes are produced, not only versions
 
 ### How to get release notes between 2 commits?
 
@@ -167,8 +258,8 @@ commit messages nothing is changes for client and it should not be released.
 
 ### When this tool is not suitable?
 
-- multiple components with complext dependencies: this tools can be used for version and release notes but it will not release or skip them in some dependency tree. In this case tools like https://lerna.js.org/ can be used.
-- 1 MR per task is used. In this case change log can be generated using following command:
+- multiple components with complex dependencies: this tools can be used for version and release notes, but it will not release or skip them in some dependency tree. In this case tools like https://lerna.js.org/ can be used.
+- 1 MR per task is always used. In this case change log can be generated using following command:
 
 ```bash
 git log --oneline --pretty="- %s" --no-merges
@@ -260,6 +351,11 @@ any short-time commitments.
 It's better to provide MR/patch for new features. Most probably new features
 without code will not be implemented as for me this repo is feature complete.
 
+
+## Known issues
+
+`lastReleaseVersion` don't work properly if repo has only 1 commit. As it's a rare case
+it's not a priority to fix.
 
 ## Development
 
