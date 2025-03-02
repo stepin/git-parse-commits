@@ -631,6 +631,7 @@ class ReleaseNotes(
                     .split("\n")
                     .firstOrNull()
             if (result.isNullOrEmpty()) return ""
+            if (result == features) return result
             return "$result..."
         }
         val separator = if (asShort) "\n" else "\n\n"
