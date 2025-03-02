@@ -3,6 +3,8 @@ set -eEuo pipefail
 cd "$(dirname "$0")"
 set -x
 
+mkdir -p results
+
 cd repo
 
 # main cases
@@ -100,6 +102,16 @@ cd ../repo4
 ../../git-parse-commits releaseVersion > ../results/4-releaseVersion
 ../../git-parse-commits -j releaseNotes | jq . > ../results/4-releaseNotes.json
 
+# pre-releases case
+cd ../repo5
+../../git-parse-commits -l test1 currentVersion > ../results/5-test1-currentVersion
+../../git-parse-commits -l test1 lastReleaseVersion > ../results/5-test1-lastReleaseVersion
+../../git-parse-commits -l test1 releaseVersion > ../results/5-test1-releaseVersion
+../../git-parse-commits -l test1 -j releaseNotes | jq . > ../results/5-test1-releaseNotes.json
+../../git-parse-commits currentVersion > ../results/5-currentVersion
+../../git-parse-commits lastReleaseVersion > ../results/5-lastReleaseVersion
+../../git-parse-commits releaseVersion > ../results/5-releaseVersion
+../../git-parse-commits -j releaseNotes | jq . > ../results/5-releaseNotes.json
 
 #
 # Diff should contain only dates/sha changes (any other difference means fails):

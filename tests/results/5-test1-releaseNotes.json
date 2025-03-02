@@ -1,0 +1,43 @@
+{
+  "version": {
+    "last": "0.1.0-e7c3250f",
+    "increment": "minor",
+    "current": "0.2.0"
+  },
+  "commits": [
+    {
+      "commit": "c709c2bcd727ffa4193f30ff887539b897b76512",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sun Mar 2 13:29:07 2025 +0400",
+      "raw": "- fix: now it's better for sure",
+      "headers": [
+        {
+          "type": "fix",
+          "scope": null,
+          "description": "now it's better for sure",
+          "group": "Fixes",
+          "increment": "patch"
+        }
+      ],
+      "notes": {}
+    },
+    {
+      "commit": "e7c3250f0d974be1041a6598e26a28f158242066",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Sun Mar 2 13:29:07 2025 +0400",
+      "raw": "initial",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": null,
+          "description": "initial",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {}
+    }
+  ]
+}

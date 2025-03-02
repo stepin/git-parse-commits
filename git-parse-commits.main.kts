@@ -62,6 +62,31 @@ data class AutomaticVersion(
     val notFound: Boolean,
 )
 
+fun gitDescribe(
+    tagPrefix: String,
+    abbrev: Int,
+    commitish: String,
+): AutomaticVersion {
+    val version = run(
+            "git",
+            "describe",
+            "--tags",
+            "--always",
+            "--abbrev=$abbrev",
+            "--candidates=50",
+            "--match",
+            "$tagPrefix*.*.*",
+            "--exclude",
+            "$tagPrefix*[-+]*",
+            commitish,
+        )
+    var automatic = false
+    if (SHA_RE.matches(version)) {
+        return AutomaticVersion("0.1.0-${version.take(8)}", true)
+    }
+    return AutomaticVersion(version, false)
+}
+
 fun lastReleaseVersion(
     tagPrefix: String,
     asTag: Boolean,
@@ -69,29 +94,11 @@ fun lastReleaseVersion(
 ): AutomaticVersion {
     val last = lastRevision.ifEmpty { "HEAD" }
 
-    var version =
-        if (tagPrefix.isEmpty()) {
-            run("git", "describe", "--tags", "--always", "--abbrev=0", "$last^")
-        } else {
-            run(
-                "git",
-                "describe",
-                "--tags",
-                "--always",
-                "--abbrev=0",
-                "--match",
-                "$tagPrefix*",
-                "$last^",
-            )
-        }
-    var automatic = false
-    if (SHA_RE.matches(version)) {
-        version = "0.1.0-${version.take(8)}"
-        automatic = true
-    } else if (!asTag) {
-        version = version.substring(tagPrefix.length)
+    val automaticVersion = gitDescribe(tagPrefix, 0, "$last^")
+    if (asTag) {
+        return automaticVersion
     }
-    return AutomaticVersion(version, automatic)
+    return automaticVersion.copy(version = automaticVersion.version.substring(tagPrefix.length))
 }
 
 class GitCommitsParser {
@@ -494,25 +501,13 @@ class CurrentVersion :
 
     override fun run() {
         val last = config.lastRevision.ifEmpty { "HEAD" }
-        var version =
-            if (config.tagPrefix.isEmpty()) {
-                run("git", "describe", "--tags", "--always", last)
+        var automaticVersion = gitDescribe(config.tagPrefix, 7, last)
+        val version =
+            if (config.asTag) {
+                automaticVersion.version
             } else {
-                run(
-                    "git",
-                    "describe",
-                    "--tags",
-                    "--always",
-                    "--match",
-                    "${config.tagPrefix}*",
-                    last,
-                )
+                automaticVersion.version.substring(config.tagPrefix.length)
             }
-        if (SHA_RE.matches(version)) {
-            version = "0.1.0-${version.take(8)}"
-        } else if (!config.asTag) {
-            version = version.substring(config.tagPrefix.length)
-        }
         val result =
             if (config.asJson) {
                 """{"current_version": "$version"}"""
