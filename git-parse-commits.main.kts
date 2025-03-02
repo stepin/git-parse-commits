@@ -393,7 +393,7 @@ class GitCommitsParser {
         increment: IncrementType,
     ): String {
         val versionParts = "\\.|\\-|\\+".toRegex().split(version)
-        if (versionParts[0].isEmpty() || versionParts[1].isEmpty() || versionParts[2].isEmpty()) {
+        if (versionParts.size < 3 || versionParts[0].isEmpty() || versionParts[1].isEmpty() || versionParts[2].isEmpty()) {
             fatal(
                 exitCode = 3,
                 "version '$version' looks incorrect.",
