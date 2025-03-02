@@ -5,11 +5,14 @@ EOC
 kotlinc -script -Xplugin="${KOTLIN_HOME}/lib/kotlinx-serialization-compiler-plugin.jar" -- "$0" "$@"
 exit $?
 */
-// NOTE: this script is for Kotlin 2.0 as kotlinx-serialization-json:1.7.0 require it
-@file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
-@file:DependsOn("com.github.ajalt.clikt:clikt-jvm:4.4.0")
+// NOTE: this script is for Kotlin 2 as kotlinx-serialization-json require it
+@file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+@file:DependsOn("com.github.ajalt.clikt:clikt-jvm:5.0.3")
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
+import com.github.ajalt.clikt.core.main
+import com.github.ajalt.clikt.core.obj
 import com.github.ajalt.clikt.core.requireObject
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.default
@@ -67,7 +70,8 @@ fun gitDescribe(
     abbrev: Int,
     commitish: String,
 ): AutomaticVersion {
-    val version = run(
+    val version =
+        run(
             "git",
             "describe",
             "--tags",
@@ -437,12 +441,10 @@ class CliConfig(
     val lastRevision: String,
 )
 
-class GitParseCommits :
-    CliktCommand(
-        name = "git-parse-commits",
-        printHelpOnEmptyArgs = true,
-        help = "Provides next release version and release notes from git commit messages.",
-    ) {
+class GitParseCommits : CliktCommand(name = "git-parse-commits") {
+    override fun help(context: Context) = "Provides next release version and release notes from git commit messages."
+
+    override val printHelpOnEmptyArgs = true
     private val json by option("-j", "--json", help = "Output in json format").flag()
     private val tagPrefix by option(
         "-t",
@@ -473,11 +475,9 @@ class GitParseCommits :
     }
 }
 
-class Version :
-    CliktCommand(
-        name = "version",
-        help = "Prints version of this tool",
-    ) {
+class Version : CliktCommand(name = "version") {
+    override fun help(context: Context) = "Prints version of this tool"
+
     private val config by requireObject<CliConfig>()
 
     override fun run() {
@@ -492,11 +492,9 @@ class Version :
     }
 }
 
-class CurrentVersion :
-    CliktCommand(
-        name = "currentVersion",
-        help = "Prints current version (useful for non-release builds)",
-    ) {
+class CurrentVersion : CliktCommand(name = "currentVersion") {
+    override fun help(context: Context) = "Prints current version (useful for non-release builds)"
+
     private val config by requireObject<CliConfig>()
 
     override fun run() {
@@ -518,11 +516,9 @@ class CurrentVersion :
     }
 }
 
-class LastReleaseVersion :
-    CliktCommand(
-        name = "lastReleaseVersion",
-        help = "Prints version of last release",
-    ) {
+class LastReleaseVersion : CliktCommand(name = "lastReleaseVersion") {
+    override fun help(context: Context) = "Prints version of last release"
+
     private val config by requireObject<CliConfig>()
 
     override fun run() {
@@ -545,10 +541,9 @@ class LastReleaseVersion :
 
 class ReleaseVersion(
     private val gitCommitsParser: GitCommitsParser,
-) : CliktCommand(
-        name = "releaseVersion",
-        help = "Prints version of next release from git commit messages",
-    ) {
+) : CliktCommand(name = "releaseVersion") {
+    override fun help(context: Context) = "Prints version of next release from git commit messages"
+
     private val config by requireObject<CliConfig>()
 
     override fun run() {
@@ -573,10 +568,9 @@ class ReleaseVersion(
 
 class ReleaseNotes(
     private val gitCommitsParser: GitCommitsParser,
-) : CliktCommand(
-        name = "releaseNotes",
-        help = "Prints release notes from git commit messages",
-    ) {
+) : CliktCommand(name = "releaseNotes") {
+    override fun help(context: Context) = "Prints release notes from git commit messages"
+
     private val asShort by option(
         "-s",
         "--short",
