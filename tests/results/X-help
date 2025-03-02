@@ -5,10 +5,12 @@ Usage: git-parse-commits [<options>] <command> [<args>]...
 Options:
   -j, --json                     Output in json format
   -t, --tag-prefix=<text>        Prefix for tags (optional)
-  --tag                          Add tag prefix to versions (only if tag prefix is defined)
+  --tag                          Add tag prefix to versions (only if tag prefix
+                                 is defined)
   -s, --scope=<text>             Scope to filter release note items
   -i, --initial-revision=<text>  Start range from next revision
   -l, --last-revision=<text>     Stop on this revision
+  -pre, --allow-pre-releases     Don't drop pre-release tags
   -h, --help                     Show this message and exit
 
 Commands:

@@ -108,8 +108,13 @@ cd ../repo5
 ../../git-parse-commits -l test1 lastReleaseVersion > ../results/5-test1-lastReleaseVersion
 ../../git-parse-commits -l test1 releaseVersion > ../results/5-test1-releaseVersion
 ../../git-parse-commits -l test1 -j releaseNotes | jq . > ../results/5-test1-releaseNotes.json
+../../git-parse-commits -l 0.2.0-my-prelease.1 -pre currentVersion > ../results/5-pre-currentVersion
+../../git-parse-commits -l 0.2.0-my-prelease.1 -pre lastReleaseVersion > ../results/5-pre-lastReleaseVersion
+../../git-parse-commits -l 0.2.0-my-prelease.1 -pre releaseVersion > ../results/5-pre-releaseVersion
+../../git-parse-commits -l 0.2.0-my-prelease.1 -pre -j releaseNotes | jq . > ../results/5-pre-releaseNotes.json
 ../../git-parse-commits currentVersion > ../results/5-currentVersion
 ../../git-parse-commits lastReleaseVersion > ../results/5-lastReleaseVersion
+../../git-parse-commits -pre lastReleaseVersion > ../results/5-pre2-lastReleaseVersion
 ../../git-parse-commits releaseVersion > ../results/5-releaseVersion
 ../../git-parse-commits -j releaseNotes | jq . > ../results/5-releaseNotes.json
 

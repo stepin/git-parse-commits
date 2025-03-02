@@ -20,7 +20,6 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.IOException
 
@@ -35,9 +34,9 @@ fun fatal(
     Runtime.getRuntime().exit(exitCode)
 }
 
-fun run(vararg cmd: String): String {
+fun run(cmd: List<String>): String {
     try {
-        val process = Runtime.getRuntime().exec(cmd)
+        val process = Runtime.getRuntime().exec(cmd.toTypedArray())
 
         val result = process.waitFor()
         val stdout = process.inputStream.bufferedReader().readText()
@@ -45,7 +44,7 @@ fun run(vararg cmd: String): String {
             val stderr = process.errorStream.bufferedReader().readText()
             fatal(
                 exitCode = 2,
-                "fatal: failed command ${cmd.toList()}",
+                "fatal: failed command $cmd",
                 "output: $stdout",
                 "error output: $stderr",
                 "tip: most common reason: incorrect git commit SHA",
@@ -53,7 +52,7 @@ fun run(vararg cmd: String): String {
         }
         return stdout.trim()
     } catch (e: IOException) {
-        println("fatal: failed command ${cmd.toList()}")
+        println("fatal: failed command $cmd")
         throw e
     }
 }
@@ -67,11 +66,12 @@ data class AutomaticVersion(
 
 fun gitDescribe(
     tagPrefix: String,
+    allowPreReleases: Boolean,
     abbrev: Int,
     commitish: String,
 ): AutomaticVersion {
-    val version =
-        run(
+    val cmd =
+        mutableListOf(
             "git",
             "describe",
             "--tags",
@@ -80,11 +80,13 @@ fun gitDescribe(
             "--candidates=50",
             "--match",
             "$tagPrefix*.*.*",
-            "--exclude",
-            "$tagPrefix*[-+]*",
-            commitish,
         )
-    var automatic = false
+    if (!allowPreReleases) {
+        cmd.add("--exclude")
+        cmd.add("$tagPrefix*[-+]*")
+    }
+    cmd.add(commitish)
+    val version = run(cmd)
     if (SHA_RE.matches(version)) {
         return AutomaticVersion("0.1.0-${version.take(8)}", true)
     }
@@ -95,10 +97,11 @@ fun lastReleaseVersion(
     tagPrefix: String,
     asTag: Boolean,
     lastRevision: String,
+    allowPreReleases: Boolean,
 ): AutomaticVersion {
     val last = lastRevision.ifEmpty { "HEAD" }
 
-    val automaticVersion = gitDescribe(tagPrefix, 0, "$last^")
+    val automaticVersion = gitDescribe(tagPrefix, allowPreReleases, 0, "$last^")
     if (asTag) {
         return automaticVersion
     }
@@ -181,8 +184,9 @@ class GitCommitsParser {
         scope: String?,
         initialRevision: String,
         lastRevision: String,
+        allowPreReleases: Boolean,
     ): ParsedInfo {
-        val lastReleaseInfo = lastReleaseVersion(tagPrefix, true, lastRevision)
+        val lastReleaseInfo = lastReleaseVersion(tagPrefix, true, lastRevision, allowPreReleases)
         val initialWithDefault =
             initialRevision.ifEmpty {
                 if (lastReleaseInfo.notFound) {
@@ -200,7 +204,7 @@ class GitCommitsParser {
                 lastReleaseInfo.version
             }
 
-        val commitsJson = run("jc", "git", "log", "--no-merges", range)
+        val commitsJson = run(listOf("jc", "git", "log", "--no-merges", range))
         val rawCommits = json.decodeFromString<List<RawCommit>>(commitsJson)
 
         var parsedCommits = rawCommits.map { parseCommit(it) }
@@ -439,6 +443,7 @@ class CliConfig(
     val scope: String,
     val initialRevision: String,
     val lastRevision: String,
+    val allowPreReleases: Boolean,
 )
 
 class GitParseCommits : CliktCommand(name = "git-parse-commits") {
@@ -469,9 +474,14 @@ class GitParseCommits : CliktCommand(name = "git-parse-commits") {
         "--last-revision",
         help = "Stop on this revision",
     ).default("HEAD")
+    private val allowPreReleases by option(
+        "-pre",
+        "--allow-pre-releases",
+        help = "Don't drop pre-release tags",
+    ).flag()
 
     override fun run() {
-        currentContext.obj = CliConfig(json, tagPrefix, tag, scope, initialRevision, lastRevision)
+        currentContext.obj = CliConfig(json, tagPrefix, tag, scope, initialRevision, lastRevision, allowPreReleases)
     }
 }
 
@@ -499,7 +509,7 @@ class CurrentVersion : CliktCommand(name = "currentVersion") {
 
     override fun run() {
         val last = config.lastRevision.ifEmpty { "HEAD" }
-        var automaticVersion = gitDescribe(config.tagPrefix, 7, last)
+        val automaticVersion = gitDescribe(config.tagPrefix, config.allowPreReleases, 7, last)
         val version =
             if (config.asTag) {
                 automaticVersion.version
@@ -527,6 +537,7 @@ class LastReleaseVersion : CliktCommand(name = "lastReleaseVersion") {
                 config.tagPrefix,
                 config.asTag,
                 config.lastRevision,
+                config.allowPreReleases,
             )
         val version = automaticVersion.version
         val result =
@@ -554,6 +565,7 @@ class ReleaseVersion(
                 config.scope,
                 config.initialRevision,
                 config.lastRevision,
+                config.allowPreReleases,
             )
         val version = parsedInfo.version
         val result =
@@ -591,6 +603,7 @@ class ReleaseNotes(
                 config.scope,
                 config.initialRevision,
                 config.lastRevision,
+                config.allowPreReleases,
             )
         val result =
             if (config.asJson) {
