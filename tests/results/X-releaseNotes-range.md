@@ -1,30 +1,30 @@
 ### Features
 
-- (7b7fba0) fix(component1)!: major change, MY-123
-- (6454379) fix!: major change
-- (5159983) something 2
-- (9678f5e) light tag case
-- (5b4c33e) compontent1: best feature ever
-- (c248b3e) custom: custom1
-- (c248b3e) refactor:refactor1
-- (c248b3e) feature1
-- (ce2f01f) compontent1: best feature ever
+- (6d0a7b0) fix(component1)!: major change, MY-123
+- (d89cd1c) fix!: major change
+- (922b189) something 2
+- (c7a53c9) light tag case
+- (3b729a5) compontent1: best feature ever
+- (47ac448) custom: custom1
+- (47ac448) refactor:refactor1
+- (47ac448) feature1
+- (50ddc15) compontent1: best feature ever
 
 ### Fixes
 
-- (5b4c33e) now it's better for sure
-- (c248b3e) perf: perf1
-- (c248b3e) docs: docs1
-- (c248b3e) fix1
-- (30bf8ec) now it's better for sure
+- (3b729a5) now it's better for sure
+- (47ac448) perf: perf1
+- (47ac448) docs: docs1
+- (47ac448) fix1
+- (d01db8e) now it's better for sure
 
 ### Other
 
-- (5b4c33e) chore(compontent1): even better
-- (c248b3e) test: test1
-- (c248b3e) style: style1
-- (c248b3e) build: build1
-- (c248b3e) ci: ci1
-- (c248b3e) chore: chore1
-- (4508080) chore(compontent1): even better
-- (5e80b84) chore(compontent1): even better
+- (3b729a5) chore(compontent1): even better
+- (47ac448) test: test1
+- (47ac448) style: style1
+- (47ac448) build: build1
+- (47ac448) ci: ci1
+- (47ac448) chore: chore1
+- (e5f8242) chore(compontent1): even better
+- (d6fddc9) chore(compontent1): even better

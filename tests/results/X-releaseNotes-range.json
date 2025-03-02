@@ -6,10 +6,10 @@
   },
   "commits": [
     {
-      "commit": "7b7fba0534310dffe1b012cf9bda7c77b9c8cd34",
+      "commit": "6d0a7b055351198cd87c15c2b32f8596e6c2fb63",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "fix(component1)!: major change, MY-123",
       "headers": [
         {
@@ -23,10 +23,10 @@
       "notes": {}
     },
     {
-      "commit": "6454379e72b13d6c457163c594b7263aa25175e8",
+      "commit": "d89cd1cda66fa0662dd364c12ed8fcba5f10d7da",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "fix!: major change",
       "headers": [
         {
@@ -40,10 +40,10 @@
       "notes": {}
     },
     {
-      "commit": "827af0d921a75d74a069fb45de0aed0718275af0",
+      "commit": "26e0e3c049f7e577c2f509ba8ffcfaa84ea4d4c6",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "something, WIP\n\nBREAKING CHANGE: something1",
       "headers": [
         {
@@ -59,10 +59,10 @@
       }
     },
     {
-      "commit": "5159983702708c81b2f6e567e54878fccc22c998",
+      "commit": "922b189e34ed214c42aa3b78dc8ab6e53a72f2a0",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "something 2",
       "headers": [
         {
@@ -76,10 +76,10 @@
       "notes": {}
     },
     {
-      "commit": "0741c7cce1a141a1d3349db9ff878d672adaab59",
+      "commit": "4ec6ab376aaf3ecef0e0472a66be49756cbd7009",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "something, WIP",
       "headers": [
         {
@@ -93,10 +93,10 @@
       "notes": {}
     },
     {
-      "commit": "9678f5e85e7328c21b3cd5a3a42eda96c97057dc",
+      "commit": "c7a53c9c48f15ecc4132c88f6884409d228000d6",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "light tag case",
       "headers": [
         {
@@ -110,10 +110,10 @@
       "notes": {}
     },
     {
-      "commit": "5b4c33eebeccdb40d51ce4fcd8205be541a033ff",
+      "commit": "3b729a5b48a87615576363e9f5f3c36e7282396b",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "- fix: now it's better for sure\nfeat(compontent1): best feature ever\nchore(compontent1): even better",
       "headers": [
         {
@@ -141,10 +141,10 @@
       "notes": {}
     },
     {
-      "commit": "c248b3e7408c9e971624329c3041f46c3894e95e",
+      "commit": "47ac4483db40a17cf7956b955cb017a113e89411",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "feat: feature1\nfix: fix1\nrefactor:refactor1\ndocs: docs1\nperf: perf1\nchore: chore1\nci: ci1\nbuild: build1\nstyle: style1\ntest: test1\nskip: skip1\nwip: wip1\nminor: minor1\ncustom: custom1",
       "headers": [
         {
@@ -249,10 +249,10 @@
       "notes": {}
     },
     {
-      "commit": "4508080326e3437d02c828bff570306198469d7f",
+      "commit": "e5f8242eae1f25d5018cedeb5e42405c202822d8",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "chore(compontent1): even better",
       "headers": [
         {
@@ -266,10 +266,10 @@
       "notes": {}
     },
     {
-      "commit": "5e80b84b2a391e37f091e1599cfbc796eaedb09a",
+      "commit": "d6fddc9d97f7d8cc9a0f5f2a3c2152bb86908ca3",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "- chore(compontent1): even better",
       "headers": [
         {
@@ -283,10 +283,10 @@
       "notes": {}
     },
     {
-      "commit": "ce2f01f37e6a7ed771666f86ae949620d3ea4eb5",
+      "commit": "50ddc15a72a31b377eb331ec0b04faec6cdb6d25",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "feat(compontent1): best feature ever",
       "headers": [
         {
@@ -300,10 +300,10 @@
       "notes": {}
     },
     {
-      "commit": "30bf8ec178bd0185167c642326e265b47c54a020",
+      "commit": "d01db8eb9d0be9c7c9993728fc66daf8ccb21a41",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sat Jun 1 18:05:28 2024 +0400",
+      "date": "Sun Mar 2 12:40:55 2025 +0400",
       "raw": "- fix: now it's better for sure",
       "headers": [
         {
