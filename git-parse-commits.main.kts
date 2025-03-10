@@ -165,6 +165,7 @@ class GitCommitsParser {
         val raw: String,
         var headers: List<ChangeLogLine>,
         val notes: Map<String, String>,
+        val title: String?,
     )
 
     @Serializable
@@ -263,7 +264,8 @@ class GitCommitsParser {
     }
 
     private fun parseCommit(raw: RawCommit): CommitInfo {
-        val (headers, notes) = parseMessage(raw.message)
+        val lines = raw.message.trim().split("\n")
+        val (headers, notes, title) = parseMessage(lines)
         return CommitInfo(
             commit = raw.commit,
             author = raw.author ?: "",
@@ -272,13 +274,32 @@ class GitCommitsParser {
             raw = raw.message,
             headers = headers,
             notes = notes,
+            title = title,
         )
     }
 
-    val RELEASE_LINE_RE = "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$".toRegex()
+    val RELEASE_LINE_RE = "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s?(.*)$".toRegex()
 
-    private fun parseMessage(message: String): Pair<MutableList<ChangeLogLine>, MutableMap<String, String>> {
-        val lines = message.split("\n")
+    data class ParseMessageValue(
+        val headers: MutableList<ChangeLogLine>,
+        val notes: MutableMap<String, String>,
+        val title: String?,
+    )
+
+    val IGNORE_COMMITS = setOf(
+        "minor",
+        "fix",
+        "fixes",
+        "better",
+        "ignore",
+        "wip",
+        "test",
+    )
+
+    private fun parseMessage(lines: List<String>): ParseMessageValue {
+        if (lines.size == 1 && IGNORE_COMMITS.contains(lines[0])) {
+            return ParseMessageValue(mutableListOf(), mutableMapOf(), null)
+        }
 
         val headerDelimiterIndex = lines.indexOf("")
         val footerDelimiterIndex =
@@ -300,6 +321,16 @@ class GitCommitsParser {
             } else {
                 lines.asReversed().subList(0, footerDelimiterIndex)
             }
+
+        val titlePresenceDetected =
+            lines.size > 2 &&
+            headerDelimiterIndex == 1 &&
+                    (lines[2].startsWith("-") || lines[2].startsWith("*")) &&
+                    lines[2].contains(":")
+        if (titlePresenceDetected) {
+            val value = parseMessage(lines.subList(2, lines.size))
+            return value.copy(title = headerLines[0])
+        }
 
         var isMajor = false
         val notes = mutableMapOf<String, String>()
@@ -380,12 +411,12 @@ class GitCommitsParser {
             }
         }
 
-        return Pair(headers.asReversed(), notes)
+        return ParseMessageValue(headers.asReversed(), notes, null)
     }
 
     private fun groupFromType(type: String): String? =
         when (type) {
-            "fix", "refactor", "docs", "perf", "BREAKING CHANGE" -> "Fixes"
+            "fix", "hotfix", "refactor", "docs", "perf", "BREAKING CHANGE" -> "Fixes"
             "chore", "ci", "build", "style", "test" -> "Other"
             "skip", "wip", "minor" -> null
             else -> "Features"
@@ -395,7 +426,7 @@ class GitCommitsParser {
         when (type) {
             "BREAKING CHANGE" -> IncrementType.MAJOR
 
-            "fix", "refactor", "docs", "perf", "chore", "ci", "build", "style",
+            "fix", "hotfix", "refactor", "docs", "perf", "chore", "ci", "build", "style",
             "test",
             -> IncrementType.PATCH
 

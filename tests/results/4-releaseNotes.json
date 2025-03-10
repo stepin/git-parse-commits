@@ -20,7 +20,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "31dc9df2eaeb81e42d9a855c301da40f4929942c",
@@ -37,7 +38,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "54b585ba20c094d641699c1563c5e2e9339cac62",
@@ -54,7 +56,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     }
   ]
 }

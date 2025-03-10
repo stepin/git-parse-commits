@@ -6,10 +6,58 @@
   },
   "commits": [
     {
-      "commit": "9636bacdfeb2a24645e888ece673dc4f7a31dfd6",
+      "commit": "cd93e86b46b97f681e5125db246a300f3e67d0a1",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sun Mar 2 13:29:08 2025 +0400",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
+      "raw": "fixes",
+      "headers": [],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "7dc17a2f104beb2274e3512fe01eafd1967afbc9",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
+      "raw": "fix",
+      "headers": [],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "40c5ed6c1a711d752d84db07e618025e46ca2db0",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
+      "raw": "minor",
+      "headers": [],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "e5b0ab4e28bf4481d1d31bc7c61abb0377ac771b",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
+      "raw": "Better",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": null,
+          "description": "Better",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "32a28ffd888c529c7cd27f4673c61f95ecaeb532",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
       "raw": "- chore(compontent1): even better",
       "headers": [
         {
@@ -20,13 +68,14 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
-      "commit": "42deb55eaaae17114d56aa8cca84faad57c2ffcb",
+      "commit": "8f064394d2ae27e74ec4cdf47a8cd8e33f2c8ecc",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sun Mar 2 13:29:08 2025 +0400",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
       "raw": "- feat(compontent1): best feature ever",
       "headers": [
         {
@@ -37,13 +86,14 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
-      "commit": "7446243939319133d4461c35f52945a8a1ef9778",
+      "commit": "6a5e9f9677c73764add3598f7e75d661f8161553",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sun Mar 2 13:29:08 2025 +0400",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
       "raw": "- fix: now it's better for sure",
       "headers": [
         {
@@ -54,7 +104,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     }
   ]
 }

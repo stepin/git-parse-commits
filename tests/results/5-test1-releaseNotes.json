@@ -1,15 +1,15 @@
 {
   "version": {
-    "last": "0.1.0-e7c3250f",
+    "last": "0.1.0-59732aeb",
     "increment": "minor",
     "current": "0.2.0"
   },
   "commits": [
     {
-      "commit": "c709c2bcd727ffa4193f30ff887539b897b76512",
+      "commit": "0da39d5ef05e17ff3b9a397790dab8765668c885",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sun Mar 2 13:29:07 2025 +0400",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
       "raw": "- fix: now it's better for sure",
       "headers": [
         {
@@ -20,13 +20,14 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
-      "commit": "e7c3250f0d974be1041a6598e26a28f158242066",
+      "commit": "59732aeb952d59ccde5fe4ca171abda7977dc4a0",
       "author": "Author One",
       "author_email": "AuthorOne@example.com",
-      "date": "Sun Mar 2 13:29:07 2025 +0400",
+      "date": "Mon Mar 10 23:38:44 2025 +0400",
       "raw": "initial",
       "headers": [
         {
@@ -37,7 +38,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     }
   ]
 }

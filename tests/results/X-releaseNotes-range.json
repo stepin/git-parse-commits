@@ -20,7 +20,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "d89cd1cda66fa0662dd364c12ed8fcba5f10d7da",
@@ -37,7 +38,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "26e0e3c049f7e577c2f509ba8ffcfaa84ea4d4c6",
@@ -56,7 +58,8 @@
       ],
       "notes": {
         "BREAKING CHANGE": "something1"
-      }
+      },
+      "title": null
     },
     {
       "commit": "922b189e34ed214c42aa3b78dc8ab6e53a72f2a0",
@@ -73,7 +76,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "4ec6ab376aaf3ecef0e0472a66be49756cbd7009",
@@ -90,7 +94,8 @@
           "increment": "none"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "c7a53c9c48f15ecc4132c88f6884409d228000d6",
@@ -107,7 +112,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "3b729a5b48a87615576363e9f5f3c36e7282396b",
@@ -138,7 +144,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "47ac4483db40a17cf7956b955cb017a113e89411",
@@ -225,11 +232,11 @@
           "increment": "patch"
         },
         {
-          "type": "feat",
+          "type": "refactor",
           "scope": null,
-          "description": "refactor:refactor1",
-          "group": "Features",
-          "increment": "minor"
+          "description": "refactor1",
+          "group": "Fixes",
+          "increment": "patch"
         },
         {
           "type": "fix",
@@ -246,7 +253,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "e5f8242eae1f25d5018cedeb5e42405c202822d8",
@@ -263,7 +271,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "d6fddc9d97f7d8cc9a0f5f2a3c2152bb86908ca3",
@@ -280,7 +289,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "50ddc15a72a31b377eb331ec0b04faec6cdb6d25",
@@ -297,7 +307,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     },
     {
       "commit": "d01db8eb9d0be9c7c9993728fc66daf8ccb21a41",
@@ -314,7 +325,8 @@
           "increment": "patch"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     }
   ]
 }

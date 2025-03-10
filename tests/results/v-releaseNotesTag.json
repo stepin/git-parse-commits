@@ -20,7 +20,8 @@
           "increment": "minor"
         }
       ],
-      "notes": {}
+      "notes": {},
+      "title": null
     }
   ]
 }
