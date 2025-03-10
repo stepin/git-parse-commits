@@ -286,15 +286,16 @@ class GitCommitsParser {
         val title: String?,
     )
 
-    val IGNORE_COMMITS = setOf(
-        "minor",
-        "fix",
-        "fixes",
-        "better",
-        "ignore",
-        "wip",
-        "test",
-    )
+    val IGNORE_COMMITS =
+        setOf(
+            "minor",
+            "fix",
+            "fixes",
+            "better",
+            "ignore",
+            "wip",
+            "test",
+        )
 
     private fun parseMessage(lines: List<String>): ParseMessageValue {
         if (lines.size == 1 && IGNORE_COMMITS.contains(lines[0])) {
@@ -324,9 +325,9 @@ class GitCommitsParser {
 
         val titlePresenceDetected =
             lines.size > 2 &&
-            headerDelimiterIndex == 1 &&
-                    (lines[2].startsWith("-") || lines[2].startsWith("*")) &&
-                    lines[2].contains(":")
+                headerDelimiterIndex == 1 &&
+                (lines[2].startsWith("-") || lines[2].startsWith("*")) &&
+                lines[2].contains(":")
         if (titlePresenceDetected) {
             val value = parseMessage(lines.subList(2, lines.size))
             return value.copy(title = headerLines[0])
