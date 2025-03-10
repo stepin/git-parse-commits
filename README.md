@@ -71,6 +71,7 @@ create_changelog:
   - cat relNotes.env
   - git-parse-commits releaseNotes | tee releaseNotes.md
   - git-parse-commits releaseNotes --short | tee releaseNotes.txt
+  - git-parse-commits -i main releaseNotes --short | tee releaseNotesMR.txt
   artifacts:
       reports:
           dotenv: relNotes.env
@@ -271,6 +272,8 @@ It's like https://www.conventionalcommits.org/en/v1.0.0/ but several header line
 It's case for backend development when there is no possibility to create several test envs in parallel.
 
 ```
+[title]
+
 [header(s)]
 
 [optional body]

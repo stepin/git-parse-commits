@@ -1,0 +1,184 @@
+{
+  "version": {
+    "last": "0.2.0",
+    "increment": "minor",
+    "current": "0.3.0"
+  },
+  "commits": [
+    {
+      "commit": "9304046df98e736b4099050039e089d126bb7d2e",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Tue Mar 11 00:04:59 2025 +0400",
+      "raw": "My title\n\n- feat:feature1\nhotfix: fix1\nrefactor:refactor1\ndocs: docs1\nperf: perf1\nchore: chore1\nci: ci1\nbuild: build1\nstyle: style1\ntest: test1\nskip: skip1\nwip: wip1\nminor: minor1\ncustom: custom1",
+      "headers": [
+        {
+          "type": "custom",
+          "scope": null,
+          "description": "custom1",
+          "group": "Features",
+          "increment": "minor"
+        },
+        {
+          "type": "minor",
+          "scope": null,
+          "description": "minor1",
+          "group": null,
+          "increment": "none"
+        },
+        {
+          "type": "wip",
+          "scope": null,
+          "description": "wip1",
+          "group": null,
+          "increment": "none"
+        },
+        {
+          "type": "skip",
+          "scope": null,
+          "description": "skip1",
+          "group": null,
+          "increment": "none"
+        },
+        {
+          "type": "test",
+          "scope": null,
+          "description": "test1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "style",
+          "scope": null,
+          "description": "style1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "build",
+          "scope": null,
+          "description": "build1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "ci",
+          "scope": null,
+          "description": "ci1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "chore",
+          "scope": null,
+          "description": "chore1",
+          "group": "Other",
+          "increment": "patch"
+        },
+        {
+          "type": "perf",
+          "scope": null,
+          "description": "perf1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "docs",
+          "scope": null,
+          "description": "docs1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "refactor",
+          "scope": null,
+          "description": "refactor1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "hotfix",
+          "scope": null,
+          "description": "fix1",
+          "group": "Fixes",
+          "increment": "patch"
+        },
+        {
+          "type": "feat",
+          "scope": null,
+          "description": "feature1",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {},
+      "title": "My title"
+    },
+    {
+      "commit": "e6293f459d0bd92f9e665510591aa8ec47b0fa73",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Tue Mar 11 00:04:59 2025 +0400",
+      "raw": "fixes",
+      "headers": [],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "edcc77b85a091aa419da494e4e8c9682e92310f3",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Tue Mar 11 00:04:59 2025 +0400",
+      "raw": "fix",
+      "headers": [],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "98c50ad7d1f6d23c9a1208d987d29460e72a59c8",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Tue Mar 11 00:04:59 2025 +0400",
+      "raw": "minor",
+      "headers": [],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "91c0442bcef1677d284747f2d7136cb31ba86d2e",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Tue Mar 11 00:04:59 2025 +0400",
+      "raw": "Better",
+      "headers": [
+        {
+          "type": "feat",
+          "scope": null,
+          "description": "Better",
+          "group": "Features",
+          "increment": "minor"
+        }
+      ],
+      "notes": {},
+      "title": null
+    },
+    {
+      "commit": "29807355620088761cac5ae1bedb885cfec4f1e0",
+      "author": "Author One",
+      "author_email": "AuthorOne@example.com",
+      "date": "Tue Mar 11 00:04:59 2025 +0400",
+      "raw": "- chore(compontent1): even better",
+      "headers": [
+        {
+          "type": "chore",
+          "scope": "compontent1",
+          "description": "even better",
+          "group": "Other",
+          "increment": "patch"
+        }
+      ],
+      "notes": {},
+      "title": null
+    }
+  ]
+}

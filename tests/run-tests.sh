@@ -118,6 +118,13 @@ cd ../repo5
 ../../git-parse-commits releaseVersion > ../results/5-releaseVersion
 ../../git-parse-commits -j releaseNotes | jq . > ../results/5-releaseNotes.json
 
+cd ../repo6
+../../git-parse-commits -i main currentVersion > ../results/6-currentVersion
+../../git-parse-commits -i main lastReleaseVersion > ../results/6-lastReleaseVersion
+../../git-parse-commits -i main -pre lastReleaseVersion > ../results/6-pre2-lastReleaseVersion
+../../git-parse-commits -i main releaseVersion > ../results/6-releaseVersion
+../../git-parse-commits -i main -j releaseNotes | jq . > ../results/6-releaseNotes.json
+
 #
 # Diff should contain only dates/sha changes (any other difference means fails):
 cd ../results
