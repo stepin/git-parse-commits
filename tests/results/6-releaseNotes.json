@@ -150,15 +150,7 @@
       "author_email": "AuthorOne@example.com",
       "date": "Tue Mar 11 00:04:59 2025 +0400",
       "raw": "Better",
-      "headers": [
-        {
-          "type": "feat",
-          "scope": null,
-          "description": "Better",
-          "group": "Features",
-          "increment": "minor"
-        }
-      ],
+      "headers": [],
       "notes": {},
       "title": null
     },

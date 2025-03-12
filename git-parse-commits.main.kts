@@ -298,7 +298,7 @@ class GitCommitsParser {
         )
 
     private fun parseMessage(lines: List<String>): ParseMessageValue {
-        if (lines.size == 1 && IGNORE_COMMITS.contains(lines[0])) {
+        if (lines.size == 1 && IGNORE_COMMITS.contains(lines[0].lowercase())) {
             return ParseMessageValue(mutableListOf(), mutableMapOf(), null)
         }
 
