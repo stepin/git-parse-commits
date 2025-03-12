@@ -71,7 +71,7 @@ create_changelog:
   - cat relNotes.env
   - git-parse-commits releaseNotes | tee releaseNotes.md
   - git-parse-commits releaseNotes --short | tee releaseNotes.txt
-  - git-parse-commits -i main releaseNotes --short | tee releaseNotesMR.txt
+  - git-parse-commits -i origin/main releaseNotes --short | tee releaseNotesMR.txt
   artifacts:
       reports:
           dotenv: relNotes.env
